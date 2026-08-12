@@ -511,16 +511,73 @@
 
     </main>
 
-    <!-- FOOTER STATUS BAR -->
+    <!-- FOOTER WITH COPYRIGHTS & CREDITS -->
     <footer class="studio-footer glass-card">
-      <div class="status-item">
-       
+      <div class="footer-top">
+        <!-- Brand & Copyright -->
+        <div class="footer-col brand-col">
+          <div class="footer-brand">
+            <img src="logo.jpg" alt="CloudBeats Logo" class="footer-logo">
+            <span class="footer-title">CLOUDBEATS STUDIO</span>
+          </div>
+          <p class="footer-tagline">Studio de création musicale virtuel interactif Web Audio API.</p>
+          <p class="footer-copyright">
+            © 2026 <strong>CloudBeats Studio</strong>. Tous droits réservés.<br>
+            Créé par <strong>Émile Gagnon</strong> &amp; <strong>GEEK FACTORY</strong>.
+          </p>
+        </div>
+
+        <!-- Audio Credits -->
+        <div class="footer-col credits-col">
+          <h4><i class="fa-solid fa-compact-disc text-piano"></i> Crédits &amp; Outils Utilisés</h4>
+          <ul class="credits-list">
+            <li>
+              <i class="fa-solid fa-keyboard text-piano"></i>
+              <span><strong>Piano</strong> : <a href="https://github.com/gleitz/midi-js-soundfonts" target="_blank" rel="noopener" class="footer-link">Alexander Holm Grand Piano (MIDI.js) <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a></span>
+            </li>
+            <li>
+              <i class="fa-solid fa-bars-staggered text-xylo"></i>
+              <span><strong>Xylophone</strong> : <a href="https://freepats.zenvoid.org" target="_blank" rel="noopener" class="footer-link">Échantillons Acoustiques Réels (FreePats) <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a></span>
+            </li>
+            <li>
+              <i class="fa-solid fa-drum text-drums"></i>
+              <span><strong>Batterie</strong> : <a href="https://github.com/Tonejs/audio" target="_blank" rel="noopener" class="footer-link">Tone.js Acoustic Kit <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a></span>
+            </li>
+            <li>
+              <i class="fa-solid fa-file-audio text-mic"></i>
+              <span><strong>Encodeur MP3</strong> : <a href="https://github.com/vladimirm/lamejs" target="_blank" rel="noopener" class="footer-link">LameJS Encoder <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a></span>
+            </li>
+            <li>
+              <i class="fa-solid fa-icons text-seq"></i>
+              <span><strong>Icônes &amp; Typo</strong> : <a href="https://fontawesome.com" target="_blank" rel="noopener" class="footer-link">FontAwesome <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a> &amp; <a href="https://fonts.google.com" target="_blank" rel="noopener" class="footer-link">Google Fonts <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a></span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- System & Engine Status -->
+        <div class="footer-col status-col">
+          <h4><i class="fa-solid fa-microchip text-seq"></i> Moteur &amp; Infrastructure</h4>
+          <div class="status-badge-group">
+            <span class="status-badge">
+              <i class="fa-solid fa-bolt status-online"></i> Moteur Audio : 
+              <a href="https://developer.mozilla.org/fr/docs/Web/API/Web_Audio_API" target="_blank" rel="noopener" class="footer-link"><strong id="audioEngineStatus">Web Audio API</strong> <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a>
+            </span>
+            <span class="status-badge">
+              <i class="fa-solid fa-cloud status-online"></i> Hébergement : 
+              <a href="https://vercel.com" target="_blank" rel="noopener" class="footer-link"><strong>Vercel Cloud</strong> <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a>
+            </span>
+            <span class="status-badge">
+              <i class="fa-solid fa-code-branch"></i> Version : <strong>v4.5 Pro DAW</strong>
+            </span>
+          </div>
+        </div>
       </div>
-      <div class="status-item">
-      
-      </div>
-      <div class="status-item">
-        <i class="fa-solid fa-cloud-bolt"></i> 2026 CloudBeats Studio par GEEK FACTORY
+
+      <div class="footer-bottom">
+        <div class="footer-meta">
+          <span><i class="fa-solid fa-heart text-drums"></i> Conçu pour la création musicale sur le web</span>
+          <span><i class="fa-solid fa-shield-halved"></i> Licence MIT Open Source</span>
+        </div>
       </div>
     </footer>
 
