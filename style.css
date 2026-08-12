@@ -1500,6 +1500,58 @@ body {
   color: var(--text-main);
 }
 
+.footer-contact {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+/* BUY ME A COFFEE STYLES */
+.btn-bmc {
+  background: #ffdd00 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  border: 1px solid #e6cb00 !important;
+  box-shadow: 0 0 12px rgba(255, 221, 0, 0.35);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.btn-bmc:hover {
+  background: #ffea00 !important;
+  color: #000000 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(255, 221, 0, 0.55) !important;
+}
+
+.btn-bmc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #ffdd00 0%, #f7b731 100%);
+  color: #111111;
+  font-weight: 800;
+  font-size: 12px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  border: 1px solid #e6cb00;
+  box-shadow: 0 2px 12px rgba(255, 221, 0, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  margin-top: 6px;
+}
+
+.btn-bmc-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 18px rgba(255, 221, 0, 0.55);
+}
+
 .credits-list {
   list-style: none;
   display: flex;
