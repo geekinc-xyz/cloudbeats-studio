@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudBeats — Studio de Création Musicale Virtuel</title>
+  <meta name="description" content="CloudBeats — Studio de musique interactif professionnel avec Grand Piano Alexander Holm, batterie virtuelle, xylophone et console de mixage.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background Ambient Glows -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-glow bg-glow-3"></div>
+
+  <div class="app-container">
+    
+    <!-- HEADER STUDIO BAR -->
+    <header class="studio-header glass-card">
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="logo.jpg" alt="CloudBeats Logo" class="brand-logo-img">
+        </div>
+        <div class="brand-text">
+          <h1>CLOUDBEATS STUDIO</h1>
+        </div>
+      </div>
+
+      <!-- Live Canvas Spectrum Visualizer -->
+      <div class="visualizer-container">
+        <canvas id="visualizerCanvas" width="400" height="48"></canvas>
+      </div>
+
+      <!-- Master Controls & Actions -->
+      <div class="master-controls">
+        <div class="control-group">
+          <label for="masterVolume"><i class="fa-solid fa-volume-high"></i> Master</label>
+          <input type="range" id="masterVolume" min="0" max="1" step="0.01" value="0.85">
+          <span id="volumeValue">85%</span>
+        </div>
+
+        <div class="action-buttons">
+          <button id="toggleMetroBarBtn" class="btn btn-secondary" title="Afficher ou masquer la barre Métronome">
+            <i class="fa-solid fa-stopwatch text-xylo"></i> Métronome
+          </button>
+          <button id="micToggleBtn" class="btn btn-mic">
+            <i class="fa-solid fa-microphone-slash"></i> Micro
+          </button>
+          <button id="recordBtn" class="btn btn-record">
+            <i class="fa-solid fa-circle"></i> Enregistrer
+          </button>
+          <button id="playRecordBtn" class="btn btn-secondary" disabled>
+            <i class="fa-solid fa-play"></i> Écouter
+          </button>
+          <a id="downloadRecordBtn" class="btn btn-download hidden" download="cloudbeats-session.mp3">
+            <i class="fa-solid fa-download"></i> Export MP3
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- DEDICATED METRONOME & TEMPO TOOLBAR (Hidden by default) -->
+    <div class="metronome-bar glass-card hidden" id="metronomeToolbar">
+      <div class="metro-bar-title">
+        <i class="fa-solid fa-stopwatch text-xylo"></i>
+        <span>MÉTRONOME & TEMPO</span>
+      </div>
+
+      <div class="metro-bar-section">
+        <!-- Tempo & Presets -->
+        <div class="metro-group">
+          <label for="tempoBpm"><i class="fa-solid fa-gauge-high"></i> Tempo</label>
+          <input type="number" id="tempoBpm" min="40" max="240" value="120" title="Valeur BPM">
+          <input type="range" id="tempoSlider" min="40" max="240" value="120" class="tempo-slider" title="Glisser pour ajuster le tempo">
+          <select id="tempoPresetSelect" class="btn-sm select-sm" title="Sélecteur de Tempo Musical">
+            <option value="">-- Presets --</option>
+            <option value="60">🐢 Largo (60 BPM)</option>
+            <option value="76">🚶 Adagio (76 BPM)</option>
+            <option value="92">💬 Andante (92 BPM)</option>
+            <option value="108">🎵 Moderato (108 BPM)</option>
+            <option value="120" selected>🏃 Allegro (120 BPM)</option>
+            <option value="144">🚀 Presto (144 BPM)</option>
+            <option value="180">⚡ Prestissimo (180 BPM)</option>
+          </select>
+          <button id="tapTempoBtn" class="btn-tap" title="Taper le tempo (Tap Tempo)">TAP</button>
+        </div>
+
+        <div class="metro-divider"></div>
+
+        <!-- Metronome Controls -->
+        <div class="metro-group">
+          <button id="metroToggleBtn" class="btn btn-metro" title="Activer / Désactiver le Métronome">
+            <i class="fa-solid fa-bell-slash"></i> Métronome
+            <span class="metro-led" id="metroLed"></span>
+          </button>
+
+          <label><i class="fa-solid fa-square-poll-vertical"></i> Mesure</label>
+          <select id="metroTimeSig" class="btn-sm select-sm" title="Signature Temporelle">
+            <option value="4">4/4</option>
+            <option value="3">3/4</option>
+            <option value="2">2/4</option>
+            <option value="6">6/8</option>
+          </select>
+
+          <label><i class="fa-solid fa-music"></i> Son</label>
+          <select id="metroSound" class="btn-sm select-sm" title="Son du métronome">
+            <option value="wood">🪵 Bois</option>
+            <option value="digital">🎯 Clic</option>
+            <option value="bell">🔔 Cloche</option>
+          </select>
+
+          <label for="metroVolSlider"><i class="fa-solid fa-volume-low"></i> Vol</label>
+          <input type="range" id="metroVolSlider" min="0" max="1" step="0.05" value="0.8" class="tempo-slider metro-vol-slider" title="Volume du métronome">
+        </div>
+      </div>
+    </div>
+
+    <!-- NAVIGATION TABS -->
+    <nav class="studio-nav glass-card">
+      <button class="nav-tab active" data-tab="all">
+        <i class="fa-solid fa-sliders"></i> Vue Studio
+      </button>
+      <button class="nav-tab" data-tab="piano">
+        <i class="fa-solid fa-keyboard"></i> Piano
+      </button>
+      <button class="nav-tab" data-tab="drums">
+        <i class="fa-solid fa-drum"></i> Batterie
+      </button>
+      <button class="nav-tab" data-tab="xylophone">
+        <i class="fa-solid fa-bars-staggered"></i> Xylophone
+      </button>
+      <button class="nav-tab" data-tab="mixer">
+        <i class="fa-solid fa-sliders"></i> Mixage
+      </button>
+      <button class="nav-tab" data-tab="sequencer">
+        <i class="fa-solid fa-table-cells"></i> Séquenceur
+      </button>
+    </nav>
+
+    <!-- MAIN CONTENT VIEW AREA -->
+    <main class="studio-main">
+
+      <!-- SECTION 1: GRAND PIANO ALEXANDER HOLM -->
+      <section class="instrument-section glass-card" id="section-piano">
+        <div class="section-header">
+          <div class="title-wrap">
+            <h2><i class="fa-solid fa-keyboard text-piano"></i> Grand Piano</h2>
+            
+          </div>
+          
+          <div class="piano-settings">
+            <div class="color-customizer">
+              <label><i class="fa-solid fa-palette"></i> Couleur :</label>
+              <select id="pianoThemePreset" class="btn-sm">
+                <option value="orange">Orange Feu</option>
+                <option value="amber">Ambre Doré</option>
+                <option value="red">Rouge Rubis</option>
+                <option value="cyan">Cyan Néon</option>
+                <option value="purple">Violet</option>
+              </select>
+              <input type="color" id="pianoCustomColor" value="#f97316" title="Couleur personnalisée">
+            </div>
+
+            <button id="sustainBtn" class="toggle-btn active">
+              <i class="fa-solid fa-shoe-prints"></i> Sustain
+            </button>
+            <div class="octave-control">
+              <span>Octave: </span>
+              <button id="octaveDownBtn" class="btn-sm"><i class="fa-solid fa-minus"></i></button>
+              <span id="octaveDisplay">4</span>
+              <button id="octaveUpBtn" class="btn-sm"><i class="fa-solid fa-plus"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="piano-wrapper">
+          <div class="piano-keyboard" id="pianoKeyboard"></div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: BATTERIE VIRTUELLE -->
+      <section class="instrument-section glass-card" id="section-drums">
+        <div class="section-header">
+          <div class="title-wrap">
+            <h2><i class="fa-solid fa-drum text-drums"></i> Batterie Virtuelle</h2>
+          </div>
+        </div>
+
+        <div class="virtual-drumset-container">
+          <div class="drumset-stage">
+            
+            <div class="drum-element cymbal crash-cymbal" data-type="crash">
+              <div class="cymbal-disc"></div>
+              <div class="element-label">Crash <span class="key-badge">7</span></div>
+            </div>
+
+            <div class="drum-element cymbal hihat-cymbal" data-type="hihat">
+              <div class="cymbal-disc double"></div>
+              <div class="element-label">Charley <span class="key-badge">3</span></div>
+            </div>
+
+            <div class="drum-element drum-head tom-1" data-type="tom1">
+              <div class="drum-skin"></div>
+              <div class="element-label">Tom High <span class="key-badge">5</span></div>
+            </div>
+
+            <div class="drum-element drum-head tom-2" data-type="tom2">
+              <div class="drum-skin"></div>
+              <div class="element-label">Tom Mid <span class="key-badge">6</span></div>
+            </div>
+
+            <div class="drum-element cymbal ride-cymbal" data-type="ride">
+              <div class="cymbal-disc"></div>
+              <div class="element-label">Ride <span class="key-badge">8</span></div>
+            </div>
+
+            <div class="drum-element drum-head snare-drum" data-type="snare">
+              <div class="drum-skin snare-skin"></div>
+              <div class="element-label">Snare <span class="key-badge">2</span></div>
+            </div>
+
+            <div class="drum-element bass-drum" data-type="kick">
+              <div class="bass-shell">
+                <div class="kick-beater"></div>
+                <div class="bass-brand">STUDIO</div>
+              </div>
+              <div class="element-label">Grosse Caisse <span class="key-badge">1</span></div>
+            </div>
+
+            <div class="drum-element drum-head floor-tom" data-type="clap">
+              <div class="drum-skin"></div>
+              <div class="element-label">Floor Tom <span class="key-badge">9</span></div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: XYLOPHONE -->
+      <section class="instrument-section glass-card" id="section-xylophone">
+        <div class="section-header">
+          <div class="title-wrap">
+            <h2><i class="fa-solid fa-bars-staggered text-xylo"></i> Xylophone</h2>
+          </div>
+
+          <div class="xylo-settings">
+            <div class="color-customizer">
+              <label><i class="fa-solid fa-child-reaching"></i> Sonorité :</label>
+              <select id="xyloSoundMode" class="btn-sm">
+                <option value="childlike">🎈 Enfantin / Jouet Féérique</option>
+                <option value="concert">🪵 Concert / Marimba</option>
+              </select>
+            </div>
+
+            <div class="color-customizer">
+              <label><i class="fa-solid fa-palette"></i> Finition :</label>
+              <select id="xyloThemePreset" class="btn-sm">
+                <option value="fire">Feu Orange</option>
+                <option value="rainbow">Arc-en-ciel</option>
+                <option value="pastel">Pastel</option>
+                <option value="wood">Bois Acajou</option>
+                <option value="gold">Or Métallique</option>
+              </select>
+              <input type="color" id="xyloCustomColor" value="#f97316" title="Couleur personnalisée">
+            </div>
+          </div>
+        </div>
+
+        <div class="xylophone-container">
+          <div class="xylo-frame" id="xyloBarsContainer"></div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: CONSOLE DE MIXAGE PRO -->
+      <section class="instrument-section glass-card" id="section-mixer">
+        <div class="section-header">
+          <div class="title-wrap">
+            <h2><i class="fa-solid fa-sliders text-piano"></i> Console de Mixage</h2>
+          </div>
+        </div>
+
+        <div class="mixer-console">
+          
+          <!-- TRACK 1: PIANO -->
+          <div class="mixer-channel" data-channel="piano">
+            <div class="channel-header">
+              <i class="fa-solid fa-keyboard text-piano"></i>
+              <span>PIANO</span>
+            </div>
+            <div class="channel-controls">
+              <div class="btn-group-ms">
+                <button class="btn-ms btn-mute" data-ch="piano">M</button>
+                <button class="btn-ms btn-solo" data-ch="piano">S</button>
+              </div>
+              <div class="knob-wrap">
+                <label>PAN</label>
+                <input type="range" class="knob-pan" data-ch="piano" min="-1" max="1" step="0.05" value="0">
+                <span class="knob-val pan-val">C</span>
+              </div>
+              <div class="eq-group">
+                <div class="eq-knob">
+                  <label>HIGH</label>
+                  <input type="range" class="knob-eq" data-ch="piano" data-eq="high" min="-12" max="12" value="0">
+                </div>
+                <div class="eq-knob">
+                  <label>MID</label>
+                  <input type="range" class="knob-eq" data-ch="piano" data-eq="mid" min="-12" max="12" value="0">
+                </div>
+                <div class="eq-knob">
+                  <label>LOW</label>
+                  <input type="range" class="knob-eq" data-ch="piano" data-eq="low" min="-12" max="12" value="0">
+                </div>
+              </div>
+              <div class="fader-wrap">
+                <div class="vu-meter"><div class="vu-bar" id="vu-piano"></div></div>
+                <input type="range" class="fader-vol" data-ch="piano" min="0" max="1.2" step="0.01" value="0.85" orient="vertical">
+              </div>
+              <span class="fader-val" id="val-piano">85%</span>
+            </div>
+          </div>
+
+          <!-- TRACK 2: BATTERIE -->
+          <div class="mixer-channel" data-channel="drums">
+            <div class="channel-header">
+              <i class="fa-solid fa-drum text-drums"></i>
+              <span>BATTERIE</span>
+            </div>
+            <div class="channel-controls">
+              <div class="btn-group-ms">
+                <button class="btn-ms btn-mute" data-ch="drums">M</button>
+                <button class="btn-ms btn-solo" data-ch="drums">S</button>
+              </div>
+              <div class="knob-wrap">
+                <label>PAN</label>
+                <input type="range" class="knob-pan" data-ch="drums" min="-1" max="1" step="0.05" value="0">
+                <span class="knob-val pan-val">C</span>
+              </div>
+              <div class="eq-group">
+                <div class="eq-knob">
+                  <label>HIGH</label>
+                  <input type="range" class="knob-eq" data-ch="drums" data-eq="high" min="-12" max="12" value="0">
+                </div>
+                <div class="eq-knob">
+                  <label>MID</label>
+                  <input type="range" class="knob-eq" data-ch="drums" data-eq="mid" min="-12" max="12" value="0">
+                </div>
+                <div class="eq-knob">
+                  <label>LOW</label>
+                  <input type="range" class="knob-eq" data-ch="drums" data-eq="low" min="-12" max="12" value="0">
+                </div>
+              </div>
+              <div class="fader-wrap">
+                <div class="vu-meter"><div class="vu-bar" id="vu-drums"></div></div>
+                <input type="range" class="fader-vol" data-ch="drums" min="0" max="1.2" step="0.01" value="0.85" orient="vertical">
+              </div>
+              <span class="fader-val" id="val-drums">85%</span>
+            </div>
+          </div>
+
+          <!-- TRACK 3: XYLOPHONE -->
+          <div class="mixer-channel" data-channel="xylo">
+            <div class="channel-header">
+              <i class="fa-solid fa-bars-staggered text-xylo"></i>
+              <span>XYLOPHONE</span>
+            </div>
+            <div class="channel-controls">
+              <div class="btn-group-ms">
+                <button class="btn-ms btn-mute" data-ch="xylo">M</button>
+                <button class="btn-ms btn-solo" data-ch="xylo">S</button>
+              </div>
+              <div class="knob-wrap">
+                <label>PAN</label>
+                <input type="range" class="knob-pan" data-ch="xylo" min="-1" max="1" step="0.05" value="0">
+                <span class="knob-val pan-val">C</span>
+              </div>
+              <div class="eq-group">
+                <div class="eq-knob">
+                  <label>HIGH</label>
+                  <input type="range" class="knob-eq" data-ch="xylo" data-eq="high" min="-12" max="12" value="0">
+                </div>
+                <div class="eq-knob">
+                  <label>MID</label>
+                  <input type="range" class="knob-eq" data-ch="xylo" data-eq="mid" min="-12" max="12" value="0">
+                </div>
+                <div class="eq-knob">
+                  <label>LOW</label>
+                  <input type="range" class="knob-eq" data-ch="xylo" data-eq="low" min="-12" max="12" value="0">
+                </div>
+              </div>
+              <div class="fader-wrap">
+                <div class="vu-meter"><div class="vu-bar" id="vu-xylo"></div></div>
+                <input type="range" class="fader-vol" data-ch="xylo" min="0" max="1.2" step="0.01" value="0.85" orient="vertical">
+              </div>
+              <span class="fader-val" id="val-xylo">85%</span>
+            </div>
+          </div>
+
+          <!-- TRACK 4: VOIX / MICRO -->
+          <div class="mixer-channel mic-channel" data-channel="mic">
+            <div class="channel-header">
+              <i class="fa-solid fa-microphone text-mic"></i>
+              <span>VOIX / MICRO</span>
+            </div>
+            <div class="channel-controls">
+              <div class="btn-group-ms">
+                <button class="btn-ms btn-mute" data-ch="mic">M</button>
+              </div>
+              <div class="knob-wrap">
+                <label>PAN</label>
+                <input type="range" class="knob-pan" data-ch="mic" min="-1" max="1" step="0.05" value="0">
+                <span class="knob-val pan-val">C</span>
+              </div>
+              <div class="eq-group">
+                <div class="eq-knob">
+                  <label>HIGH</label>
+                  <input type="range" class="knob-eq" data-ch="mic" data-eq="high" min="-12" max="12" value="0">
+                </div>
+                <div class="eq-knob">
+                  <label>MID</label>
+                  <input type="range" class="knob-eq" data-ch="mic" data-eq="mid" min="-12" max="12" value="0">
+                </div>
+                <div class="eq-knob">
+                  <label>LOW</label>
+                  <input type="range" class="knob-eq" data-ch="mic" data-eq="low" min="-12" max="12" value="0">
+                </div>
+              </div>
+              <div class="fader-wrap">
+                <div class="vu-meter"><div class="vu-bar" id="vu-mic"></div></div>
+                <input type="range" class="fader-vol" data-ch="mic" min="0" max="1.5" step="0.01" value="1.0" orient="vertical">
+              </div>
+              <span class="fader-val" id="val-mic">100%</span>
+            </div>
+          </div>
+
+          <!-- TRACK 5: MASTER BUS -->
+          <div class="mixer-channel master-channel" data-channel="master">
+            <div class="channel-header">
+              <i class="fa-solid fa-crown text-master"></i>
+              <span>MASTER</span>
+            </div>
+            <div class="channel-controls">
+              <div class="btn-group-ms">
+                <button class="btn-ms btn-mute" data-ch="master">M</button>
+              </div>
+              <div class="knob-wrap">
+                <label>PAN</label>
+                <input type="range" class="knob-pan" data-ch="master" min="-1" max="1" step="0.05" value="0">
+                <span class="knob-val pan-val">C</span>
+              </div>
+              <div class="eq-group">
+                <div class="eq-knob">
+                  <label>HIGH</label>
+                  <input type="range" class="knob-eq" data-ch="master" data-eq="high" min="-12" max="12" value="0">
+                </div>
+                <div class="eq-knob">
+                  <label>MID</label>
+                  <input type="range" class="knob-eq" data-ch="master" data-eq="mid" min="-12" max="12" value="0">
+                </div>
+                <div class="eq-knob">
+                  <label>LOW</label>
+                  <input type="range" class="knob-eq" data-ch="master" data-eq="low" min="-12" max="12" value="0">
+                </div>
+              </div>
+              <div class="fader-wrap">
+                <div class="vu-meter"><div class="vu-bar" id="vu-master"></div></div>
+                <input type="range" class="fader-vol" data-ch="master" min="0" max="1.2" step="0.01" value="0.85" orient="vertical">
+              </div>
+              <span class="fader-val" id="val-master">85%</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 5: SEQUENCEUR 16-STEPS -->
+      <section class="instrument-section glass-card" id="section-sequencer">
+        <div class="section-header">
+          <div class="title-wrap">
+            <h2><i class="fa-solid fa-table-cells text-seq"></i> Séquenceur 16 Étapes</h2>
+          </div>
+
+          <div class="seq-controls">
+            <button id="seqPlayBtn" class="btn btn-primary">
+              <i class="fa-solid fa-play"></i> Lancer la Boucle
+            </button>
+            <button id="seqClearBtn" class="btn btn-secondary">
+              <i class="fa-solid fa-trash-can"></i> Effacer
+            </button>
+            <select id="seqPresetSelect" class="preset-select">
+              <option value="">-- Presets --</option>
+              <option value="rock">Rock & Piano</option>
+              <option value="funk">Groove & Xylo</option>
+              <option value="ballad">Ballade Douce</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="sequencer-matrix" id="sequencerMatrix"></div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER STATUS BAR -->
+    <footer class="studio-footer glass-card">
+      <div class="status-item">
+       
+      </div>
+      <div class="status-item">
+      
+      </div>
+      <div class="status-item">
+        <i class="fa-solid fa-cloud-bolt"></i> 2026 CloudBeats Studio par GEEK FACTORY
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="lame.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

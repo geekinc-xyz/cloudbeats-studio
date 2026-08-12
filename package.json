@@ -1,0 +1,13 @@
+{
+  "name": "cloudbeats-music-studio",
+  "version": "1.0.0",
+  "description": "CloudBeats DAW Music Studio with Real Xylophone, Piano, Virtual Drums, Metronome & MP3 Session Recorder",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve -s .",
+    "dev": "npx serve -s ."
+  },
+  "keywords": ["music", "studio", "daw", "xylophone", "piano", "drums", "metronome", "audio", "web-audio"],
+  "author": "CloudBeats Studio",
+  "license": "MIT"
+}
