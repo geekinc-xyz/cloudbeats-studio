@@ -967,18 +967,18 @@ body {
 }
 
 .open-hihat {
-  width: 130px;
-  height: 130px;
-  top: 100px;
-  left: 40px;
+  width: 125px;
+  height: 125px;
+  top: 190px;
+  left: 35px;
 }
 
 /* Closed Hi-Hat Foot Pedal */
 .closed-hihat-pedal {
   width: 90px;
   height: 140px;
-  bottom: 40px;
-  left: 60px;
+  bottom: 30px;
+  left: 52px;
   perspective: 400px;
 }
 
