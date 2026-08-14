@@ -966,18 +966,84 @@ body {
   height: 120px;
 }
 
-.closed-hihat {
-  width: 110px;
-  height: 110px;
-  top: 170px;
-  left: 20px;
+.open-hihat {
+  width: 130px;
+  height: 130px;
+  top: 100px;
+  left: 40px;
 }
 
-.open-hihat {
-  width: 115px;
-  height: 115px;
-  top: 295px;
-  left: 20px;
+/* Closed Hi-Hat Foot Pedal */
+.closed-hihat-pedal {
+  width: 90px;
+  height: 140px;
+  bottom: 40px;
+  left: 60px;
+  perspective: 400px;
+}
+
+.pedal-frame {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.pedal-rod {
+  width: 6px;
+  height: 45px;
+  background: linear-gradient(to right, #94a3b8, #f8fafc, #64748b);
+  border-radius: 3px;
+  margin-bottom: -5px;
+  z-index: 1;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.pedal-footboard {
+  width: 70px;
+  height: 105px;
+  background: linear-gradient(135deg, #334155 0%, #1e293b 60%, #0f172a 100%);
+  border: 3px solid #64748b;
+  border-radius: 8px 8px 16px 16px;
+  position: relative;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.7), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  transform-origin: bottom center;
+  transition: transform 0.06s ease, border-color 0.06s ease, box-shadow 0.06s ease;
+}
+
+.tread-lines {
+  width: 50px;
+  height: 50px;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 5px,
+    rgba(255, 255, 255, 0.15) 5px,
+    rgba(255, 255, 255, 0.15) 8px
+  );
+  border-radius: 4px;
+}
+
+.heel-plate {
+  width: 54px;
+  height: 22px;
+  background: linear-gradient(to bottom, #475569, #1e293b);
+  border-radius: 4px;
+  border-top: 2px solid #94a3b8;
+}
+
+.hihat-pedal-element.active .pedal-footboard {
+  transform: rotateX(16deg) scale(0.95);
+  border-color: var(--color-drums);
+  box-shadow: 0 0 20px var(--color-drums), inset 0 0 10px var(--color-drums);
 }
 
 .ride-cymbal {
