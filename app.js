@@ -1353,9 +1353,38 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ------------------------------------------------------------------------
-  // BILINGUAL TRANSLATION SYSTEM (FR / EN)
+  // BILINGUAL TRANSLATION SYSTEM (EN / FR) - DEFAULT: ENGLISH
   // ------------------------------------------------------------------------
   const translations = {
+    en: {
+      btnMetro: 'Metronome',
+      btnMic: 'Mic',
+      btnRecord: 'Record',
+      btnPlay: 'Listen',
+      btnExport: 'Export MP3',
+      metroTitle: 'METRONOME & TEMPO',
+      lblTempo: 'Tempo',
+      lblTimeSig: 'Time Sig',
+      lblSound: 'Sound',
+      lblVol: 'Vol',
+      optWood: '🪵 Wood',
+      optClick: '🎯 Click',
+      optBell: '🔔 Bell',
+      tabStudio: 'Studio View',
+      tabPiano: 'Piano',
+      tabDrums: 'Drums',
+      tabXylo: 'Xylophone',
+      tabMixer: 'Mixer',
+      tabSeq: '16-Step Looper',
+      titlePiano: 'Grand Piano',
+      titleDrums: 'Virtual Acoustic Drums',
+      titleXylo: 'Real Recorded Xylophone',
+      titleMixer: 'Mixing Console',
+      titleSeq: '16-Step Pattern Sequencer',
+      seqPlay: 'Play Loop',
+      seqStop: 'Stop Loop',
+      seqClear: 'Clear'
+    },
     fr: {
       btnMetro: 'Métronome',
       btnMic: 'Micro',
@@ -1367,6 +1396,9 @@ document.addEventListener('DOMContentLoaded', () => {
       lblTimeSig: 'Mesure',
       lblSound: 'Son',
       lblVol: 'Vol',
+      optWood: '🪵 Bois',
+      optClick: '🎯 Clic',
+      optBell: '🔔 Cloche',
       tabStudio: 'Vue Studio',
       tabPiano: 'Piano',
       tabDrums: 'Batterie',
@@ -1379,36 +1411,12 @@ document.addEventListener('DOMContentLoaded', () => {
       titleMixer: 'Console de Mixage',
       titleSeq: 'Séquenceur 16 Étapes',
       seqPlay: 'Lancer la Boucle',
+      seqStop: 'Arrêter la Boucle',
       seqClear: 'Effacer'
-    },
-    en: {
-      btnMetro: 'Metronome',
-      btnMic: 'Mic',
-      btnRecord: 'Record',
-      btnPlay: 'Listen',
-      btnExport: 'Export MP3',
-      metroTitle: 'METRONOME & TEMPO',
-      lblTempo: 'Tempo',
-      lblTimeSig: 'Time Sig',
-      lblSound: 'Sound',
-      lblVol: 'Vol',
-      tabStudio: 'Studio View',
-      tabPiano: 'Piano',
-      tabDrums: 'Drums',
-      tabXylo: 'Xylophone',
-      tabMixer: 'Mixer',
-      tabSeq: 'Sequencer',
-      titlePiano: 'Grand Piano',
-      titleDrums: 'Acoustic Drums',
-      titleXylo: 'Real Xylophone',
-      titleMixer: 'Mixing Console',
-      titleSeq: '16-Step Sequencer',
-      seqPlay: 'Play Loop',
-      seqClear: 'Clear'
     }
   };
 
-  let currentLang = localStorage.getItem('cloudbeats_lang') || 'fr';
+  let currentLang = localStorage.getItem('cloudbeats_lang') || 'en';
 
   function applyLanguage(lang) {
     currentLang = lang;
@@ -1417,7 +1425,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const langText = document.getElementById('currentLangText');
     if (langText) langText.textContent = lang.toUpperCase();
 
-    const t = translations[lang] || translations.fr;
+    const t = translations[lang] || translations.en;
 
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
@@ -1428,7 +1436,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.getElementById('langToggleBtn')?.addEventListener('click', () => {
-    const newLang = currentLang === 'fr' ? 'en' : 'fr';
+    const newLang = currentLang === 'en' ? 'fr' : 'en';
     applyLanguage(newLang);
   });
 

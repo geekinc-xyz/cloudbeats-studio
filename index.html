@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CloudBeats — Studio de Création Musicale Virtuel</title>
-  <meta name="description" content="CloudBeats — Studio de musique interactif professionnel avec Grand Piano Alexander Holm, batterie virtuelle, xylophone et console de mixage.">
+  <title>CloudBeats — Virtual Music Creation Studio</title>
+  <meta name="description" content="CloudBeats — Professional interactive Web Audio DAW with Alexander Holm Grand Piano, virtual acoustic drums, real xylophone, mixer console, and looper.">
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -51,20 +51,20 @@
         </div>
 
         <div class="action-buttons">
-          <button id="langToggleBtn" class="btn btn-secondary btn-lang" title="Changer la langue / Switch language">
-            <i class="fa-solid fa-globe"></i> <span id="currentLangText">FR</span>
+          <button id="langToggleBtn" class="btn btn-secondary btn-lang" title="Switch language / Changer la langue">
+            <i class="fa-solid fa-globe"></i> <span id="currentLangText">EN</span>
           </button>
-          <button id="toggleMetroBarBtn" class="btn btn-secondary" title="Afficher ou masquer la barre Métronome">
-            <i class="fa-solid fa-stopwatch text-xylo"></i> <span data-i18n="btnMetro">Métronome</span>
+          <button id="toggleMetroBarBtn" class="btn btn-secondary" title="Show or hide Metronome bar">
+            <i class="fa-solid fa-stopwatch text-xylo"></i> <span data-i18n="btnMetro">Metronome</span>
           </button>
           <button id="micToggleBtn" class="btn btn-mic">
-            <i class="fa-solid fa-microphone-slash"></i> <span data-i18n="btnMic">Micro</span>
+            <i class="fa-solid fa-microphone-slash"></i> <span data-i18n="btnMic">Mic</span>
           </button>
           <button id="recordBtn" class="btn btn-record">
-            <i class="fa-solid fa-circle"></i> <span data-i18n="btnRecord">Enregistrer</span>
+            <i class="fa-solid fa-circle"></i> <span data-i18n="btnRecord">Record</span>
           </button>
           <button id="playRecordBtn" class="btn btn-secondary" disabled>
-            <i class="fa-solid fa-play"></i> <span data-i18n="btnPlay">Écouter</span>
+            <i class="fa-solid fa-play"></i> <span data-i18n="btnPlay">Listen</span>
           </button>
           <a id="downloadRecordBtn" class="btn btn-download hidden" download="cloudbeats-session.mp3">
             <i class="fa-solid fa-download"></i> <span data-i18n="btnExport">Export MP3</span>
@@ -77,16 +77,16 @@
     <div class="metronome-bar glass-card hidden" id="metronomeToolbar">
       <div class="metro-bar-title">
         <i class="fa-solid fa-stopwatch text-xylo"></i>
-        <span data-i18n="metroTitle">MÉTRONOME & TEMPO</span>
+        <span data-i18n="metroTitle">METRONOME & TEMPO</span>
       </div>
 
       <div class="metro-bar-section">
         <!-- Tempo & Presets -->
         <div class="metro-group">
           <label for="tempoBpm"><i class="fa-solid fa-gauge-high"></i> <span data-i18n="lblTempo">Tempo</span></label>
-          <input type="number" id="tempoBpm" min="40" max="240" value="120" title="Valeur BPM">
-          <input type="range" id="tempoSlider" min="40" max="240" value="120" class="tempo-slider" title="Glisser pour ajuster le tempo">
-          <select id="tempoPresetSelect" class="btn-sm select-sm" title="Sélecteur de Tempo Musical">
+          <input type="number" id="tempoBpm" min="40" max="240" value="120" title="BPM Value">
+          <input type="range" id="tempoSlider" min="40" max="240" value="120" class="tempo-slider" title="Drag to adjust tempo">
+          <select id="tempoPresetSelect" class="btn-sm select-sm" title="Musical Tempo Selector">
             <option value="">-- Presets --</option>
             <option value="60">🐢 Largo (60 BPM)</option>
             <option value="76">🚶 Adagio (76 BPM)</option>
@@ -96,35 +96,35 @@
             <option value="144">🚀 Presto (144 BPM)</option>
             <option value="180">⚡ Prestissimo (180 BPM)</option>
           </select>
-          <button id="tapTempoBtn" class="btn-tap" title="Taper le tempo (Tap Tempo)">TAP</button>
+          <button id="tapTempoBtn" class="btn-tap" title="Tap Tempo">TAP</button>
         </div>
 
         <div class="metro-divider"></div>
 
         <!-- Metronome Controls -->
         <div class="metro-group">
-          <button id="metroToggleBtn" class="btn btn-metro" title="Activer / Désactiver le Métronome">
-            <i class="fa-solid fa-bell-slash"></i> <span data-i18n="btnMetro">Métronome</span>
+          <button id="metroToggleBtn" class="btn btn-metro" title="Enable / Disable Metronome">
+            <i class="fa-solid fa-bell-slash"></i> <span data-i18n="btnMetro">Metronome</span>
             <span class="metro-led" id="metroLed"></span>
           </button>
 
-          <label><i class="fa-solid fa-square-poll-vertical"></i> <span data-i18n="lblTimeSig">Mesure</span></label>
-          <select id="metroTimeSig" class="btn-sm select-sm" title="Signature Temporelle">
+          <label><i class="fa-solid fa-square-poll-vertical"></i> <span data-i18n="lblTimeSig">Time Sig</span></label>
+          <select id="metroTimeSig" class="btn-sm select-sm" title="Time Signature">
             <option value="4">4/4</option>
             <option value="3">3/4</option>
             <option value="2">2/4</option>
             <option value="6">6/8</option>
           </select>
 
-          <label><i class="fa-solid fa-music"></i> <span data-i18n="lblSound">Son</span></label>
-          <select id="metroSound" class="btn-sm select-sm" title="Son du métronome">
-            <option value="wood">🪵 Bois</option>
-            <option value="digital">🎯 Clic</option>
-            <option value="bell">🔔 Cloche</option>
+          <label><i class="fa-solid fa-music"></i> <span data-i18n="lblSound">Sound</span></label>
+          <select id="metroSound" class="btn-sm select-sm" title="Metronome Sound">
+            <option value="wood" data-i18n="optWood">🪵 Wood</option>
+            <option value="digital" data-i18n="optClick">🎯 Click</option>
+            <option value="bell" data-i18n="optBell">🔔 Bell</option>
           </select>
 
           <label for="metroVolSlider"><i class="fa-solid fa-volume-low"></i> <span data-i18n="lblVol">Vol</span></label>
-          <input type="range" id="metroVolSlider" min="0" max="1" step="0.05" value="0.8" class="tempo-slider metro-vol-slider" title="Volume du métronome">
+          <input type="range" id="metroVolSlider" min="0" max="1" step="0.05" value="0.8" class="tempo-slider metro-vol-slider" title="Metronome Volume">
         </div>
       </div>
     </div>
@@ -132,17 +132,24 @@
     <!-- NAVIGATION TABS -->
     <nav class="studio-nav glass-card">
       <button class="nav-tab active" data-tab="all">
-        <i class="fa-solid fa-sliders"></i> <span data-i18n="tabStudio">Vue Studio</span>
+        <i class="fa-solid fa-sliders"></i> <span data-i18n="tabStudio">Studio View</span>
       </button>
       <button class="nav-tab" data-tab="piano">
         <i class="fa-solid fa-keyboard"></i> <span data-i18n="tabPiano">Piano</span>
       </button>
       <button class="nav-tab" data-tab="drums">
-        <i class="fa-solid fa-drum"></i> <span data-i18n="tabDrums">Batterie</span>
+        <i class="fa-solid fa-drum"></i> <span data-i18n="tabDrums">Drums</span>
       </button>
       <button class="nav-tab" data-tab="xylophone">
         <i class="fa-solid fa-bars-staggered"></i> <span data-i18n="tabXylo">Xylophone</span>
       </button>
+      <button class="nav-tab" data-tab="mixer">
+        <i class="fa-solid fa-sliders"></i> <span data-i18n="tabMixer">Mixer</span>
+      </button>
+      <button class="nav-tab" data-tab="sequencer">
+        <i class="fa-solid fa-table-cells"></i> <span data-i18n="tabSeq">16-Step Looper</span>
+      </button>
+    </nav>
       <button class="nav-tab" data-tab="mixer">
         <i class="fa-solid fa-sliders"></i> <span data-i18n="tabMixer">Mixage</span>
       </button>
@@ -523,27 +530,27 @@
             <img src="logo.jpg" alt="CloudBeats Logo" class="footer-logo">
             <span class="footer-title">CLOUDBEATS STUDIO</span>
           </div>
-          <p class="footer-tagline">Studio de création musicale virtuel interactif Web Audio API.</p>
-          <p class="footer-copyright">
-            © 2026 <strong>CloudBeats Studio</strong>. Tous droits réservés.<br>
-            Créé par <strong>Émile Gagnon</strong> de <strong>GEEK FACTORY</strong>.
+          <p class="footer-tagline" data-i18n="tagline">Interactive Virtual Music Studio powered by Web Audio API.</p>
+          <p class="footer-copyright" data-i18n="copyright">
+            © 2026 <strong>CloudBeats Studio</strong>. All rights reserved.<br>
+            Created by <strong>Émile Gagnon</strong> from <strong>GEEK FACTORY</strong>.
           </p>
           <p class="footer-contact">
             <i class="fa-solid fa-envelope text-piano"></i> Contact : <a href="mailto:cloudbeats-studio@geek-factory.xyz" class="footer-link">cloudbeats-studio@geek-factory.xyz</a>
           </p>
           <div class="footer-buttons-wrap">
-            <a href="https://buymeacoffee.com/emileg" target="_blank" rel="noopener" class="btn-bmc-badge" title="Soutenir le projet sur Buy Me A Coffee">
-              <i class="fa-solid fa-mug-hot"></i> <span>Offrir un café à Émile</span>
+            <a href="https://buymeacoffee.com/emileg" target="_blank" rel="noopener" class="btn-bmc-badge" title="Support project on Buy Me A Coffee">
+              <i class="fa-solid fa-mug-hot"></i> <span data-i18n="btnBmcFooter">Buy Émile a Coffee</span>
             </a>
-            <a href="https://github.com/geekinc-xyz/cloudbeats-studio" target="_blank" rel="noopener" class="btn-github-badge" title="Voir le dépôt GitHub">
-              <i class="fa-brands fa-github"></i> <span>Code Source GitHub</span>
+            <a href="https://github.com/geekinc-xyz/cloudbeats-studio" target="_blank" rel="noopener" class="btn-github-badge" title="View GitHub repository">
+              <i class="fa-brands fa-github"></i> <span data-i18n="btnGithubFooter">GitHub Source Code</span>
             </a>
           </div>
         </div>
 
         <!-- Audio Credits -->
         <div class="footer-col credits-col">
-          <h4><i class="fa-solid fa-compact-disc text-piano"></i> Crédits &amp; Outils Utilisés</h4>
+          <h4 data-i18n="creditsTitle"><i class="fa-solid fa-compact-disc text-piano"></i> Credits &amp; Tools Used</h4>
           <ul class="credits-list">
             <li>
               <i class="fa-solid fa-keyboard text-piano"></i>
@@ -551,37 +558,37 @@
             </li>
             <li>
               <i class="fa-solid fa-bars-staggered text-xylo"></i>
-              <span><strong>Xylophone</strong> : <a href="https://freepats.zenvoid.org" target="_blank" rel="noopener" class="footer-link">Échantillons Acoustiques Réels (FreePats) <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a></span>
+              <span><strong>Xylophone</strong> : <a href="https://freepats.zenvoid.org" target="_blank" rel="noopener" class="footer-link">Real Acoustic Samples (FreePats) <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a></span>
             </li>
             <li>
               <i class="fa-solid fa-drum text-drums"></i>
-              <span><strong>Batterie</strong> : <a href="https://github.com/Tonejs/audio" target="_blank" rel="noopener" class="footer-link">Tone.js Acoustic Kit <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a></span>
+              <span><strong>Drums</strong> : <a href="https://github.com/Tonejs/audio" target="_blank" rel="noopener" class="footer-link">Tone.js Acoustic Kit <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a></span>
             </li>
             <li>
               <i class="fa-solid fa-file-audio text-mic"></i>
-              <span><strong>Encodeur MP3</strong> : <a href="https://github.com/vladimirm/lamejs" target="_blank" rel="noopener" class="footer-link">LameJS Encoder <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a></span>
+              <span><strong>MP3 Encoder</strong> : <a href="https://github.com/vladimirm/lamejs" target="_blank" rel="noopener" class="footer-link">LameJS Encoder <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a></span>
             </li>
             <li>
               <i class="fa-solid fa-icons text-seq"></i>
-              <span><strong>Icônes &amp; Typo</strong> : <a href="https://fontawesome.com" target="_blank" rel="noopener" class="footer-link">FontAwesome <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a> &amp; <a href="https://fonts.google.com" target="_blank" rel="noopener" class="footer-link">Google Fonts <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a></span>
+              <span><strong>Icons &amp; Fonts</strong> : <a href="https://fontawesome.com" target="_blank" rel="noopener" class="footer-link">FontAwesome <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a> &amp; <a href="https://fonts.google.com" target="_blank" rel="noopener" class="footer-link">Google Fonts <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a></span>
             </li>
           </ul>
         </div>
 
         <!-- System & Engine Status -->
         <div class="footer-col status-col">
-          <h4><i class="fa-solid fa-microchip text-seq"></i> Moteur &amp; Infrastructure</h4>
+          <h4 data-i18n="infraTitle"><i class="fa-solid fa-microchip text-seq"></i> Engine &amp; Infrastructure</h4>
           <div class="status-badge-group">
             <span class="status-badge">
-              <i class="fa-solid fa-bolt status-online"></i> Moteur Audio : 
-              <a href="https://developer.mozilla.org/fr/docs/Web/API/Web_Audio_API" target="_blank" rel="noopener" class="footer-link"><strong id="audioEngineStatus">Web Audio API</strong> <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a>
+              <i class="fa-solid fa-bolt status-online"></i> Audio Engine : 
+              <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API" target="_blank" rel="noopener" class="footer-link"><strong id="audioEngineStatus">Web Audio API</strong> <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a>
             </span>
             <span class="status-badge">
-              <i class="fa-solid fa-cloud status-online"></i> Hébergement : 
+              <i class="fa-solid fa-cloud status-online"></i> Hosting : 
               <a href="https://vercel.com" target="_blank" rel="noopener" class="footer-link"><strong>Vercel Cloud</strong> <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a>
             </span>
             <span class="status-badge">
-              <i class="fa-brands fa-github"></i> Dépôt GitHub : 
+              <i class="fa-brands fa-github"></i> GitHub Repo : 
               <a href="https://github.com/geekinc-xyz/cloudbeats-studio" target="_blank" rel="noopener" class="footer-link"><strong>cloudbeats-studio</strong> <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i></a>
             </span>
           </div>
@@ -590,11 +597,11 @@
 
       <div class="footer-bottom">
         <div class="footer-meta">
-          <span><i class="fa-solid fa-heart text-drums"></i> Conçu pour la création musicale sur le web</span>
+          <span><i class="fa-solid fa-heart text-drums"></i> Built for web music creation</span>
           <a href="https://github.com/geekinc-xyz/cloudbeats-studio" target="_blank" rel="noopener" class="footer-github-link">
             <i class="fa-brands fa-github"></i> github.com/geekinc-xyz/cloudbeats-studio
           </a>
-          <span><i class="fa-solid fa-shield-halved"></i> Licence MIT Open Source</span>
+          <span><i class="fa-solid fa-shield-halved"></i> MIT Open Source License</span>
         </div>
       </div>
     </footer>
