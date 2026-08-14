@@ -238,12 +238,12 @@
                 <div class="kick-beater"></div>
                 <div class="bass-brand">STUDIO</div>
               </div>
-              <div class="element-label">Grosse Caisse <span class="key-badge">1</span></div>
+              <div class="element-label"><span data-i18n="drumKick">Bass Drum</span> <span class="key-badge">1</span></div>
             </div>
 
             <div class="drum-element drum-head floor-tom" data-type="clap">
               <div class="drum-skin"></div>
-              <div class="element-label">Floor Tom <span class="key-badge">9</span></div>
+              <div class="element-label"><span data-i18n="drumTomLow">Low Tom</span> <span class="key-badge">9</span></div>
             </div>
 
           </div>
@@ -254,28 +254,38 @@
       <section class="instrument-section glass-card" id="section-xylophone">
         <div class="section-header">
           <div class="title-wrap">
-            <h2><i class="fa-solid fa-bars-staggered text-xylo"></i> <span data-i18n="titleXylo">Xylophone Réel</span></h2>
+            <h2><i class="fa-solid fa-bars-staggered text-xylo"></i> <span data-i18n="titleXylo">Real Recorded Xylophone</span></h2>
           </div>
 
           <div class="xylo-settings">
             <div class="color-customizer">
-              <label><i class="fa-solid fa-child-reaching"></i> Sonorité :</label>
-              <select id="xyloSoundMode" class="btn-sm">
-                <option value="childlike">🎈 Enfantin / Jouet Féérique</option>
-                <option value="concert">🪵 Concert / Marimba</option>
+              <label><i class="fa-solid fa-font"></i> <span data-i18n="lblNotation">Notation:</span></label>
+              <select id="xyloNotationSelect" class="btn-sm" title="Musical Notation System">
+                <option value="solfège" data-i18n="optSolfeggio">🎵 Do-Ré-Mi (Solfège)</option>
+                <option value="letters" data-i18n="optLetters">🔤 C-D-E (Letters)</option>
+                <option value="octaves" data-i18n="optOctaves">🎹 C4-D4 (Octaves)</option>
+                <option value="numbers" data-i18n="optNumbers">🔢 1-2-3 (Numbers)</option>
               </select>
             </div>
 
             <div class="color-customizer">
-              <label><i class="fa-solid fa-palette"></i> Finition :</label>
-              <select id="xyloThemePreset" class="btn-sm">
-                <option value="fire">Feu Orange</option>
-                <option value="rainbow">Arc-en-ciel</option>
-                <option value="pastel">Pastel</option>
-                <option value="wood">Bois Acajou</option>
-                <option value="gold">Or Métallique</option>
+              <label><i class="fa-solid fa-child-reaching"></i> <span data-i18n="lblTone">Tone:</span></label>
+              <select id="xyloSoundMode" class="btn-sm">
+                <option value="childlike" data-i18n="optToy">🎈 Toy Glockenspiel</option>
+                <option value="concert" data-i18n="optConcert">🪵 Concert Marimba</option>
               </select>
-              <input type="color" id="xyloCustomColor" value="#f97316" title="Couleur personnalisée">
+            </div>
+
+            <div class="color-customizer">
+              <label><i class="fa-solid fa-palette"></i> <span data-i18n="lblFinish">Finish:</span></label>
+              <select id="xyloThemePreset" class="btn-sm">
+                <option value="fire" data-i18n="optFire">Fire Orange</option>
+                <option value="rainbow" data-i18n="optRainbow">Rainbow</option>
+                <option value="pastel" data-i18n="optPastel">Pastel</option>
+                <option value="wood" data-i18n="optMahogany">Mahogany Wood</option>
+                <option value="gold" data-i18n="optGold">Metallic Gold</option>
+              </select>
+              <input type="color" id="xyloCustomColor" value="#f97316" title="Custom color">
             </div>
           </div>
         </div>

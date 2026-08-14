@@ -1102,29 +1102,32 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ------------------------------------------------------------------------
-  // 10. XYLOPHONE UI & LOGIC
+  // 10. XYLOPHONE UI & MULTI-NOTATION ENGINE (SOLFÈGE, LETTERS, OCTAVES, NUMBERS)
   // ------------------------------------------------------------------------
   const xyloBarsConfig = [
-    { note: 'C4', label: 'Do 4', key: 'u', height: 180 },
-    { note: 'D4', label: 'Ré 4', key: 'i', height: 172 },
-    { note: 'E4', label: 'Mi 4', key: 'o', height: 164 },
-    { note: 'F4', label: 'Fa 4', key: 'p', height: 156 },
-    { note: 'G4', label: 'Sol 4', key: 'j', height: 148 },
-    { note: 'A4', label: 'La 4', key: 'k', height: 140 },
-    { note: 'B4', label: 'Si 4', key: 'l', height: 132 },
-    { note: 'C5', label: 'Do 5', key: 'm', height: 124 },
-    { note: 'D5', label: 'Ré 5', key: 'v', height: 116 },
-    { note: 'E5', label: 'Mi 5', key: 'b', height: 108 },
-    { note: 'F5', label: 'Fa 5', key: 'n', height: 100 },
-    { note: 'G5', label: 'Sol 5', key: ',', height: 92 },
-    { note: 'A5', label: 'La 5', key: ';', height: 84 },
-    { note: 'B5', label: 'Si 5', key: ':', height: 76 },
-    { note: 'C6', label: 'Do 6', key: '!', height: 68 }
+    { note: 'C4', solfège: 'Do 4', letters: 'C', octaves: 'C4', numbers: '1', key: 'u', height: 180 },
+    { note: 'D4', solfège: 'Ré 4', letters: 'D', octaves: 'D4', numbers: '2', key: 'i', height: 172 },
+    { note: 'E4', solfège: 'Mi 4', letters: 'E', octaves: 'E4', numbers: '3', key: 'o', height: 164 },
+    { note: 'F4', solfège: 'Fa 4', letters: 'F', octaves: 'F4', numbers: '4', key: 'p', height: 156 },
+    { note: 'G4', solfège: 'Sol 4', letters: 'G', octaves: 'G4', numbers: '5', key: 'j', height: 148 },
+    { note: 'A4', solfège: 'La 4', letters: 'A', octaves: 'A4', numbers: '6', key: 'k', height: 140 },
+    { note: 'B4', solfège: 'Si 4', letters: 'B', octaves: 'B4', numbers: '7', key: 'l', height: 132 },
+    { note: 'C5', solfège: 'Do 5', letters: 'C', octaves: 'C5', numbers: '8', key: 'm', height: 124 },
+    { note: 'D5', solfège: 'Ré 5', letters: 'D', octaves: 'D5', numbers: '9', key: 'v', height: 116 },
+    { note: 'E5', solfège: 'Mi 5', letters: 'E', octaves: 'E5', numbers: '10', key: 'b', height: 108 },
+    { note: 'F5', solfège: 'Fa 5', letters: 'F', octaves: 'F5', numbers: '11', key: 'n', height: 100 },
+    { note: 'G5', solfège: 'Sol 5', letters: 'G', octaves: 'G5', numbers: '12', key: ',', height: 92 },
+    { note: 'A5', solfège: 'La 5', letters: 'A', octaves: 'A5', numbers: '13', key: ';', height: 84 },
+    { note: 'B5', solfège: 'Si 5', letters: 'B', octaves: 'B5', numbers: '14', key: ':', height: 76 },
+    { note: 'C6', solfège: 'Do 6', letters: 'C', octaves: 'C6', numbers: '15', key: '!', height: 68 }
   ];
 
   function renderXylophone() {
     const container = document.getElementById('xyloBarsContainer');
+    if (!container) return;
     container.innerHTML = '';
+
+    const notationSystem = document.getElementById('xyloNotationSelect')?.value || 'solfège';
 
     xyloBarsConfig.forEach(bar => {
       const barEl = document.createElement('div');
@@ -1133,9 +1136,11 @@ document.addEventListener('DOMContentLoaded', () => {
       barEl.style.height = `${bar.height}px`;
       barEl.style.width = `38px`;
 
+      const displayLabel = bar[notationSystem] || bar.solfège;
+
       barEl.innerHTML = `
         <span class="pin"></span>
-        <span class="xylo-note">${bar.label}</span>
+        <span class="xylo-note">${displayLabel}</span>
         <span class="pin"></span>
         <span class="xylo-shortcut">${bar.key.toUpperCase()}</span>
       `;
@@ -1148,8 +1153,14 @@ document.addEventListener('DOMContentLoaded', () => {
       container.appendChild(barEl);
     });
 
-    applyXyloTheme(xyloThemePreset.value, xyloCustomColor.value);
+    if (xyloThemePreset && xyloCustomColor) {
+      applyXyloTheme(xyloThemePreset.value, xyloCustomColor.value);
+    }
   }
+
+  document.getElementById('xyloNotationSelect')?.addEventListener('change', () => {
+    renderXylophone();
+  });
 
   function triggerXyloBar(note, barEl = null) {
     const freq = getNoteFrequency(note);
