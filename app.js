@@ -1377,13 +1377,61 @@ document.addEventListener('DOMContentLoaded', () => {
       tabMixer: 'Mixer',
       tabSeq: '16-Step Looper',
       titlePiano: 'Grand Piano',
+      lblColor: 'Color:',
+      optOrange: 'Fire Orange',
+      optAmber: 'Golden Amber',
+      optRed: 'Ruby Red',
+      optCyan: 'Neon Cyan',
+      optPurple: 'Purple Glow',
+      btnSustain: 'Sustain',
+      lblOctave: 'Octave:',
       titleDrums: 'Virtual Acoustic Drums',
+      drumCrash: 'Crash Cymbal',
+      drumHihat: 'Hi-Hat',
+      drumTomHigh: 'High Tom',
+      drumTomMid: 'Mid Tom',
+      drumRide: 'Ride Cymbal',
+      drumSnare: 'Snare Drum',
+      drumKick: 'Bass Drum',
+      drumTomLow: 'Low Tom',
       titleXylo: 'Real Recorded Xylophone',
+      lblFinish: 'Finish:',
+      optFire: 'Fire Orange',
+      optRainbow: 'Rainbow',
+      optPastel: 'Pastel',
+      optMahogany: 'Mahogany Wood',
+      optGold: 'Metallic Gold',
       titleMixer: 'Mixing Console',
+      chDrums: 'DRUMS',
+      chMic: 'MIC',
       titleSeq: '16-Step Pattern Sequencer',
       seqPlay: 'Play Loop',
+      seqPause: 'Pause',
       seqStop: 'Stop Loop',
-      seqClear: 'Clear'
+      seqClear: 'Clear',
+      presetRock: 'Rock & Piano',
+      presetFunk: 'Groove & Xylo',
+      presetBallad: 'Soft Ballad',
+      tagline: 'Interactive Virtual Music Studio powered by Web Audio API.',
+      copyright: '© 2026 <strong>CloudBeats Studio</strong>. All rights reserved.<br>Created by <strong>Émile Gagnon</strong> from <strong>GEEK FACTORY</strong>.',
+      lblContact: 'Contact:',
+      btnBmcFooter: 'Buy Émile a Coffee',
+      btnGithubFooter: 'GitHub Source Code',
+      creditsTitle: 'Credits & Tools Used',
+      infraTitle: 'Engine & Infrastructure',
+      lblAudioEngine: 'Audio Engine:',
+      lblHosting: 'Hosting:',
+      lblRepo: 'GitHub Repo:',
+      lblVersion: 'Version:',
+      lblFooterLove: 'Built for web music creation',
+      lblFooterLicense: 'MIT Open Source License',
+      trKick: 'Bass Drum',
+      trSnare: 'Snare Drum',
+      trHihat: 'Hi-Hat',
+      trPianoC: 'Piano C4',
+      trPianoE: 'Piano E4',
+      trXyloG: 'Xylo G4',
+      trXyloC: 'Xylo C5'
     },
     fr: {
       btnMetro: 'Métronome',
@@ -1406,13 +1454,61 @@ document.addEventListener('DOMContentLoaded', () => {
       tabMixer: 'Mixage',
       tabSeq: 'Séquenceur',
       titlePiano: 'Grand Piano',
+      lblColor: 'Couleur :',
+      optOrange: 'Feu Orange',
+      optAmber: 'Ambre Doré',
+      optRed: 'Rouge Rubis',
+      optCyan: 'Cyan Néon',
+      optPurple: 'Violet Pulsant',
+      btnSustain: 'Sustain',
+      lblOctave: 'Octave :',
       titleDrums: 'Batterie Virtuelle',
+      drumCrash: 'Cymbale Crash',
+      drumHihat: 'Charley',
+      drumTomHigh: 'Tom Haut',
+      drumTomMid: 'Tom Moyen',
+      drumRide: 'Cymbale Ride',
+      drumSnare: 'Caisse Claire',
+      drumKick: 'Grosse Caisse',
+      drumTomLow: 'Tom Bas',
       titleXylo: 'Xylophone Réel',
+      lblFinish: 'Finition :',
+      optFire: 'Feu Orange',
+      optRainbow: 'Arc-en-ciel',
+      optPastel: 'Pastel',
+      optMahogany: 'Bois Acajou',
+      optGold: 'Or Métallique',
       titleMixer: 'Console de Mixage',
+      chDrums: 'BATTERIE',
+      chMic: 'MICRO',
       titleSeq: 'Séquenceur 16 Étapes',
       seqPlay: 'Lancer la Boucle',
+      seqPause: 'Pause',
       seqStop: 'Arrêter la Boucle',
-      seqClear: 'Effacer'
+      seqClear: 'Effacer',
+      presetRock: 'Rock & Piano',
+      presetFunk: 'Groove & Xylo',
+      presetBallad: 'Ballade Douce',
+      tagline: 'Studio de création musicale virtuel interactif Web Audio API.',
+      copyright: '© 2026 <strong>CloudBeats Studio</strong>. Tous droits réservés.<br>Créé par <strong>Émile Gagnon</strong> de <strong>GEEK FACTORY</strong>.',
+      lblContact: 'Contact :',
+      btnBmcFooter: 'Offrir un café à Émile',
+      btnGithubFooter: 'Code Source GitHub',
+      creditsTitle: 'Crédits & Outils Utilisés',
+      infraTitle: 'Moteur & Infrastructure',
+      lblAudioEngine: 'Moteur Audio :',
+      lblHosting: 'Hébergement :',
+      lblRepo: 'Dépôt GitHub :',
+      lblVersion: 'Version :',
+      lblFooterLove: 'Conçu pour la création musicale sur le web',
+      lblFooterLicense: 'Licence MIT Open Source',
+      trKick: 'Grosse Caisse',
+      trSnare: 'Caisse Claire',
+      trHihat: 'Charley',
+      trPianoC: 'Piano Do4',
+      trPianoE: 'Piano Mi4',
+      trXyloG: 'Xylo Sol4',
+      trXyloC: 'Xylo Do5'
     }
   };
 
@@ -1433,6 +1529,11 @@ document.addEventListener('DOMContentLoaded', () => {
         el.innerHTML = t[key];
       }
     });
+
+    // Re-render looper matrix labels in active language
+    if (typeof renderSequencerMatrix === 'function') {
+      renderSequencerMatrix();
+    }
   }
 
   document.getElementById('langToggleBtn')?.addEventListener('click', () => {
@@ -1545,13 +1646,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // 12. SEQUENCEUR 16-STEPS (LOOPER)
   // ------------------------------------------------------------------------
   const seqTracks = [
-    { id: 'kick', name: 'Grosse Caisse', type: 'drum', sound: 'kick', icon: 'fa-drum' },
-    { id: 'snare', name: 'Caisse Claire', type: 'drum', sound: 'snare', icon: 'fa-box' },
-    { id: 'hihat', name: 'Charley', type: 'drum', sound: 'hihat', icon: 'fa-circle-dot' },
-    { id: 'piano_c', name: 'Piano Do4', type: 'piano', sound: 'C4', icon: 'fa-keyboard' },
-    { id: 'piano_e', name: 'Piano Mi4', type: 'piano', sound: 'E4', icon: 'fa-keyboard' },
-    { id: 'xylo_g', name: 'Xylo Sol4', type: 'xylo', sound: 'G4', icon: 'fa-bars-staggered' },
-    { id: 'xylo_c', name: 'Xylo Do5', type: 'xylo', sound: 'C5', icon: 'fa-bars-staggered' }
+    { id: 'kick', key: 'trKick', defaultEn: 'Bass Drum', defaultFr: 'Grosse Caisse', type: 'drum', sound: 'kick', icon: 'fa-drum' },
+    { id: 'snare', key: 'trSnare', defaultEn: 'Snare Drum', defaultFr: 'Caisse Claire', type: 'drum', sound: 'snare', icon: 'fa-box' },
+    { id: 'hihat', key: 'trHihat', defaultEn: 'Hi-Hat', defaultFr: 'Charley', type: 'drum', sound: 'hihat', icon: 'fa-circle-dot' },
+    { id: 'piano_c', key: 'trPianoC', defaultEn: 'Piano C4', defaultFr: 'Piano Do4', type: 'piano', sound: 'C4', icon: 'fa-keyboard' },
+    { id: 'piano_e', key: 'trPianoE', defaultEn: 'Piano E4', defaultFr: 'Piano Mi4', type: 'piano', sound: 'E4', icon: 'fa-keyboard' },
+    { id: 'xylo_g', key: 'trXyloG', defaultEn: 'Xylo G4', defaultFr: 'Xylo Sol4', type: 'xylo', sound: 'G4', icon: 'fa-bars-staggered' },
+    { id: 'xylo_c', key: 'trXyloC', defaultEn: 'Xylo C5', defaultFr: 'Xylo Do5', type: 'xylo', sound: 'C5', icon: 'fa-bars-staggered' }
   ];
 
   let seqState = seqTracks.map(() => Array(16).fill(false));
@@ -1561,15 +1662,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderSequencerMatrix() {
     const container = document.getElementById('sequencerMatrix');
+    if (!container) return;
     container.innerHTML = '';
 
     seqTracks.forEach((track, trackIdx) => {
       const row = document.createElement('div');
       row.className = 'seq-row';
 
+      const trackName = (translations[currentLang] && translations[currentLang][track.key]) || (currentLang === 'fr' ? track.defaultFr : track.defaultEn);
+
       const info = document.createElement('div');
       info.className = 'seq-track-info';
-      info.innerHTML = `<i class="fa-solid ${track.icon}"></i> ${track.name}`;
+      info.innerHTML = `<i class="fa-solid ${track.icon}"></i> ${trackName}`;
       row.appendChild(info);
 
       const stepsContainer = document.createElement('div');
