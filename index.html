@@ -51,23 +51,23 @@
         </div>
 
         <div class="action-buttons">
-          <a href="https://buymeacoffee.com/emileg" target="_blank" rel="noopener" class="btn btn-bmc" title="Offrir un café à Émile (Buy Me A Coffee)">
-            <i class="fa-solid fa-mug-hot"></i> Buy Me a Coffee
-          </a>
+          <button id="langToggleBtn" class="btn btn-secondary btn-lang" title="Changer la langue / Switch language">
+            <i class="fa-solid fa-globe"></i> <span id="currentLangText">FR</span>
+          </button>
           <button id="toggleMetroBarBtn" class="btn btn-secondary" title="Afficher ou masquer la barre Métronome">
-            <i class="fa-solid fa-stopwatch text-xylo"></i> Métronome
+            <i class="fa-solid fa-stopwatch text-xylo"></i> <span data-i18n="btnMetro">Métronome</span>
           </button>
           <button id="micToggleBtn" class="btn btn-mic">
-            <i class="fa-solid fa-microphone-slash"></i> Micro
+            <i class="fa-solid fa-microphone-slash"></i> <span data-i18n="btnMic">Micro</span>
           </button>
           <button id="recordBtn" class="btn btn-record">
-            <i class="fa-solid fa-circle"></i> Enregistrer
+            <i class="fa-solid fa-circle"></i> <span data-i18n="btnRecord">Enregistrer</span>
           </button>
           <button id="playRecordBtn" class="btn btn-secondary" disabled>
-            <i class="fa-solid fa-play"></i> Écouter
+            <i class="fa-solid fa-play"></i> <span data-i18n="btnPlay">Écouter</span>
           </button>
           <a id="downloadRecordBtn" class="btn btn-download hidden" download="cloudbeats-session.mp3">
-            <i class="fa-solid fa-download"></i> Export MP3
+            <i class="fa-solid fa-download"></i> <span data-i18n="btnExport">Export MP3</span>
           </a>
         </div>
       </div>
@@ -77,13 +77,13 @@
     <div class="metronome-bar glass-card hidden" id="metronomeToolbar">
       <div class="metro-bar-title">
         <i class="fa-solid fa-stopwatch text-xylo"></i>
-        <span>MÉTRONOME & TEMPO</span>
+        <span data-i18n="metroTitle">MÉTRONOME & TEMPO</span>
       </div>
 
       <div class="metro-bar-section">
         <!-- Tempo & Presets -->
         <div class="metro-group">
-          <label for="tempoBpm"><i class="fa-solid fa-gauge-high"></i> Tempo</label>
+          <label for="tempoBpm"><i class="fa-solid fa-gauge-high"></i> <span data-i18n="lblTempo">Tempo</span></label>
           <input type="number" id="tempoBpm" min="40" max="240" value="120" title="Valeur BPM">
           <input type="range" id="tempoSlider" min="40" max="240" value="120" class="tempo-slider" title="Glisser pour ajuster le tempo">
           <select id="tempoPresetSelect" class="btn-sm select-sm" title="Sélecteur de Tempo Musical">
@@ -104,11 +104,11 @@
         <!-- Metronome Controls -->
         <div class="metro-group">
           <button id="metroToggleBtn" class="btn btn-metro" title="Activer / Désactiver le Métronome">
-            <i class="fa-solid fa-bell-slash"></i> Métronome
+            <i class="fa-solid fa-bell-slash"></i> <span data-i18n="btnMetro">Métronome</span>
             <span class="metro-led" id="metroLed"></span>
           </button>
 
-          <label><i class="fa-solid fa-square-poll-vertical"></i> Mesure</label>
+          <label><i class="fa-solid fa-square-poll-vertical"></i> <span data-i18n="lblTimeSig">Mesure</span></label>
           <select id="metroTimeSig" class="btn-sm select-sm" title="Signature Temporelle">
             <option value="4">4/4</option>
             <option value="3">3/4</option>
@@ -116,14 +116,14 @@
             <option value="6">6/8</option>
           </select>
 
-          <label><i class="fa-solid fa-music"></i> Son</label>
+          <label><i class="fa-solid fa-music"></i> <span data-i18n="lblSound">Son</span></label>
           <select id="metroSound" class="btn-sm select-sm" title="Son du métronome">
             <option value="wood">🪵 Bois</option>
             <option value="digital">🎯 Clic</option>
             <option value="bell">🔔 Cloche</option>
           </select>
 
-          <label for="metroVolSlider"><i class="fa-solid fa-volume-low"></i> Vol</label>
+          <label for="metroVolSlider"><i class="fa-solid fa-volume-low"></i> <span data-i18n="lblVol">Vol</span></label>
           <input type="range" id="metroVolSlider" min="0" max="1" step="0.05" value="0.8" class="tempo-slider metro-vol-slider" title="Volume du métronome">
         </div>
       </div>
@@ -132,22 +132,22 @@
     <!-- NAVIGATION TABS -->
     <nav class="studio-nav glass-card">
       <button class="nav-tab active" data-tab="all">
-        <i class="fa-solid fa-sliders"></i> Vue Studio
+        <i class="fa-solid fa-sliders"></i> <span data-i18n="tabStudio">Vue Studio</span>
       </button>
       <button class="nav-tab" data-tab="piano">
-        <i class="fa-solid fa-keyboard"></i> Piano
+        <i class="fa-solid fa-keyboard"></i> <span data-i18n="tabPiano">Piano</span>
       </button>
       <button class="nav-tab" data-tab="drums">
-        <i class="fa-solid fa-drum"></i> Batterie
+        <i class="fa-solid fa-drum"></i> <span data-i18n="tabDrums">Batterie</span>
       </button>
       <button class="nav-tab" data-tab="xylophone">
-        <i class="fa-solid fa-bars-staggered"></i> Xylophone
+        <i class="fa-solid fa-bars-staggered"></i> <span data-i18n="tabXylo">Xylophone</span>
       </button>
       <button class="nav-tab" data-tab="mixer">
-        <i class="fa-solid fa-sliders"></i> Mixage
+        <i class="fa-solid fa-sliders"></i> <span data-i18n="tabMixer">Mixage</span>
       </button>
       <button class="nav-tab" data-tab="sequencer">
-        <i class="fa-solid fa-table-cells"></i> Séquenceur
+        <i class="fa-solid fa-table-cells"></i> <span data-i18n="tabSeq">Séquenceur</span>
       </button>
     </nav>
 
@@ -158,7 +158,7 @@
       <section class="instrument-section glass-card" id="section-piano">
         <div class="section-header">
           <div class="title-wrap">
-            <h2><i class="fa-solid fa-keyboard text-piano"></i> Grand Piano</h2>
+            <h2><i class="fa-solid fa-keyboard text-piano"></i> <span data-i18n="titlePiano">Grand Piano</span></h2>
             
           </div>
           
@@ -196,7 +196,7 @@
       <section class="instrument-section glass-card" id="section-drums">
         <div class="section-header">
           <div class="title-wrap">
-            <h2><i class="fa-solid fa-drum text-drums"></i> Batterie Virtuelle</h2>
+            <h2><i class="fa-solid fa-drum text-drums"></i> <span data-i18n="titleDrums">Batterie Virtuelle</span></h2>
           </div>
         </div>
 
@@ -254,7 +254,7 @@
       <section class="instrument-section glass-card" id="section-xylophone">
         <div class="section-header">
           <div class="title-wrap">
-            <h2><i class="fa-solid fa-bars-staggered text-xylo"></i> Xylophone</h2>
+            <h2><i class="fa-solid fa-bars-staggered text-xylo"></i> <span data-i18n="titleXylo">Xylophone Réel</span></h2>
           </div>
 
           <div class="xylo-settings">
@@ -289,7 +289,7 @@
       <section class="instrument-section glass-card" id="section-mixer">
         <div class="section-header">
           <div class="title-wrap">
-            <h2><i class="fa-solid fa-sliders text-piano"></i> Console de Mixage</h2>
+            <h2><i class="fa-solid fa-sliders text-piano"></i> <span data-i18n="titleMixer">Console de Mixage</span></h2>
           </div>
         </div>
 
@@ -490,15 +490,15 @@
       <section class="instrument-section glass-card" id="section-sequencer">
         <div class="section-header">
           <div class="title-wrap">
-            <h2><i class="fa-solid fa-table-cells text-seq"></i> Séquenceur 16 Étapes</h2>
+            <h2><i class="fa-solid fa-table-cells text-seq"></i> <span data-i18n="titleSeq">Séquenceur 16 Étapes</span></h2>
           </div>
 
           <div class="seq-controls">
             <button id="seqPlayBtn" class="btn btn-primary">
-              <i class="fa-solid fa-play"></i> Lancer la Boucle
+              <i class="fa-solid fa-play"></i> <span data-i18n="seqPlay">Lancer la Boucle</span>
             </button>
             <button id="seqClearBtn" class="btn btn-secondary">
-              <i class="fa-solid fa-trash-can"></i> Effacer
+              <i class="fa-solid fa-trash-can"></i> <span data-i18n="seqClear">Effacer</span>
             </button>
             <select id="seqPresetSelect" class="preset-select">
               <option value="">-- Presets --</option>

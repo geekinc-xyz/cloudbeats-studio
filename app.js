@@ -1330,7 +1330,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('metroToggleBtn');
     if (btn) {
       btn.classList.add('active');
-      btn.innerHTML = `<i class="fa-solid fa-bell text-xylo"></i> Métronome <span class="metro-led active" id="metroLed"></span>`;
+      const labelText = translations[currentLang]?.btnMetro || 'Métronome';
+      btn.innerHTML = `<i class="fa-solid fa-bell text-xylo"></i> <span data-i18n="btnMetro">${labelText}</span> <span class="metro-led active" id="metroLed"></span>`;
     }
   }
 
@@ -1344,12 +1345,94 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('metroToggleBtn');
     if (btn) {
       btn.classList.remove('active');
-      btn.innerHTML = `<i class="fa-solid fa-bell-slash"></i> Métronome <span class="metro-led" id="metroLed"></span>`;
+      const labelText = translations[currentLang]?.btnMetro || 'Métronome';
+      btn.innerHTML = `<i class="fa-solid fa-bell-slash"></i> <span data-i18n="btnMetro">${labelText}</span> <span class="metro-led" id="metroLed"></span>`;
     }
     const led = document.getElementById('metroLed');
     if (led) led.classList.remove('flash-accent', 'flash-normal');
   }
 
+  // ------------------------------------------------------------------------
+  // BILINGUAL TRANSLATION SYSTEM (FR / EN)
+  // ------------------------------------------------------------------------
+  const translations = {
+    fr: {
+      btnMetro: 'Métronome',
+      btnMic: 'Micro',
+      btnRecord: 'Enregistrer',
+      btnPlay: 'Écouter',
+      btnExport: 'Export MP3',
+      metroTitle: 'MÉTRONOME & TEMPO',
+      lblTempo: 'Tempo',
+      lblTimeSig: 'Mesure',
+      lblSound: 'Son',
+      lblVol: 'Vol',
+      tabStudio: 'Vue Studio',
+      tabPiano: 'Piano',
+      tabDrums: 'Batterie',
+      tabXylo: 'Xylophone',
+      tabMixer: 'Mixage',
+      tabSeq: 'Séquenceur',
+      titlePiano: 'Grand Piano',
+      titleDrums: 'Batterie Virtuelle',
+      titleXylo: 'Xylophone Réel',
+      titleMixer: 'Console de Mixage',
+      titleSeq: 'Séquenceur 16 Étapes',
+      seqPlay: 'Lancer la Boucle',
+      seqClear: 'Effacer'
+    },
+    en: {
+      btnMetro: 'Metronome',
+      btnMic: 'Mic',
+      btnRecord: 'Record',
+      btnPlay: 'Listen',
+      btnExport: 'Export MP3',
+      metroTitle: 'METRONOME & TEMPO',
+      lblTempo: 'Tempo',
+      lblTimeSig: 'Time Sig',
+      lblSound: 'Sound',
+      lblVol: 'Vol',
+      tabStudio: 'Studio View',
+      tabPiano: 'Piano',
+      tabDrums: 'Drums',
+      tabXylo: 'Xylophone',
+      tabMixer: 'Mixer',
+      tabSeq: 'Sequencer',
+      titlePiano: 'Grand Piano',
+      titleDrums: 'Acoustic Drums',
+      titleXylo: 'Real Xylophone',
+      titleMixer: 'Mixing Console',
+      titleSeq: '16-Step Sequencer',
+      seqPlay: 'Play Loop',
+      seqClear: 'Clear'
+    }
+  };
+
+  let currentLang = localStorage.getItem('cloudbeats_lang') || 'fr';
+
+  function applyLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('cloudbeats_lang', lang);
+
+    const langText = document.getElementById('currentLangText');
+    if (langText) langText.textContent = lang.toUpperCase();
+
+    const t = translations[lang] || translations.fr;
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) {
+        el.innerHTML = t[key];
+      }
+    });
+  }
+
+  document.getElementById('langToggleBtn')?.addEventListener('click', () => {
+    const newLang = currentLang === 'fr' ? 'en' : 'fr';
+    applyLanguage(newLang);
+  });
+
+  // Metronome UI Listeners
   function flashMetroLed(isAccent) {
     const led = document.getElementById('metroLed');
     if (!led) return;
@@ -1813,6 +1896,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderXylophone();
   renderSequencerMatrix();
   startVisualizer();
+  applyLanguage(currentLang);
   preloadLocalFolderSamples();
 
   document.body.addEventListener('touchstart', ensureAudioContext, { once: true });
