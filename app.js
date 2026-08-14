@@ -1368,6 +1368,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // ------------------------------------------------------------------------
   const translations = {
     en: {
+      pageTitle: 'CloudBeats Studio — Virtual Music Creation Studio & Web DAW',
+      pageMetaDesc: 'CloudBeats Studio is a professional, interactive Web Audio DAW featuring Grand Piano, virtual acoustic drums, real recorded xylophone, looper & mixing console.',
       btnMetro: 'Metronome',
       btnMic: 'Mic',
       btnRecord: 'Record',
@@ -1405,7 +1407,7 @@ document.addEventListener('DOMContentLoaded', () => {
       drumSnare: 'Snare Drum',
       drumKick: 'Bass Drum',
       drumTomLow: 'Low Tom',
-      titleXylo: 'Xylophone',
+      titleXylo: 'Real Recorded Xylophone',
       lblFinish: 'Finish:',
       optFire: 'Fire Orange',
       optRainbow: 'Rainbow',
@@ -1448,6 +1450,8 @@ document.addEventListener('DOMContentLoaded', () => {
       trXyloC: 'Xylo C5'
     },
     fr: {
+      pageTitle: 'CloudBeats Studio — Studio de Création Musicale Virtuel & Web DAW',
+      pageMetaDesc: 'CloudBeats Studio est un studio de création musicale interactif Web Audio DAW avec Grand Piano, batterie virtuelle, xylophone réel, looper & console de mixage.',
       btnMetro: 'Métronome',
       btnMic: 'Micro',
       btnRecord: 'Enregistrer',
@@ -1485,7 +1489,7 @@ document.addEventListener('DOMContentLoaded', () => {
       drumSnare: 'Caisse Claire',
       drumKick: 'Grosse Caisse',
       drumTomLow: 'Tom Bas',
-      titleXylo: 'Xylophone',
+      titleXylo: 'Xylophone Réel',
       lblFinish: 'Finition :',
       optFire: 'Feu Orange',
       optRainbow: 'Arc-en-ciel',
@@ -1539,6 +1543,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (langText) langText.textContent = lang.toUpperCase();
 
     const t = translations[lang] || translations.en;
+
+    // Update document title & meta SEO tags dynamically
+    if (t.pageTitle) {
+      document.title = t.pageTitle;
+      document.querySelector('meta[name="title"]')?.setAttribute('content', t.pageTitle);
+      document.getElementById('ogTitle')?.setAttribute('content', t.pageTitle);
+      document.getElementById('twitterTitle')?.setAttribute('content', t.pageTitle);
+    }
+    if (t.pageMetaDesc) {
+      document.getElementById('metaDescription')?.setAttribute('content', t.pageMetaDesc);
+      document.getElementById('ogDesc')?.setAttribute('content', t.pageMetaDesc);
+      document.getElementById('twitterDesc')?.setAttribute('content', t.pageMetaDesc);
+    }
 
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
