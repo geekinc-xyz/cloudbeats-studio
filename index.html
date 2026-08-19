@@ -71,7 +71,7 @@
 
   <div class="app-container">
     
-    <!-- HEADER STUDIO BAR -->
+    <!-- HEADER 1: BRAND LOGO, VISUALIZER & QUICK LINKS -->
     <header class="studio-header glass-card">
       <div class="brand">
         <div class="brand-logo">
@@ -82,46 +82,53 @@
         </div>
       </div>
 
-      <!-- Live Canvas Spectrum Visualizer -->
+      <!-- Live Canvas Spectrum Visualizer (waves) -->
       <div class="visualizer-container">
         <canvas id="visualizerCanvas" width="400" height="48"></canvas>
       </div>
 
-      <!-- Master Controls & Actions -->
-      <div class="master-controls">
-        <div class="control-group">
-          <label for="masterVolume"><i class="fa-solid fa-volume-high"></i> Master</label>
-          <input type="range" id="masterVolume" min="0" max="1" step="0.01" value="0.85">
-          <span id="volumeValue">85%</span>
-        </div>
-
-        <div class="action-buttons">
-          <select id="keyboardFocusSelect" class="btn-sm select-sm" title="Keyboard Focus Mode / Mode Focus Clavier">
-            <option value="all" data-i18n="focusAll">⚡ All Active</option>
-            <option value="piano" data-i18n="focusPiano">🎹 Piano Focus</option>
-            <option value="xylo" data-i18n="focusXylo">🔔 Xylophone Focus</option>
-          </select>
-          <button id="langToggleBtn" class="btn btn-secondary btn-lang" title="Switch language / Changer la langue">
-            <i class="fa-solid fa-globe"></i> <span id="currentLangText">EN</span>
-          </button>
-          <button id="toggleMetroBarBtn" class="btn btn-secondary" title="Show or hide Metronome bar">
-            <i class="fa-solid fa-stopwatch text-xylo"></i> <span data-i18n="btnMetro">Metronome</span>
-          </button>
-          <button id="micToggleBtn" class="btn btn-mic">
-            <i class="fa-solid fa-microphone-slash"></i> <span data-i18n="btnMic">Mic</span>
-          </button>
-          <button id="recordBtn" class="btn btn-record">
-            <i class="fa-solid fa-circle"></i> <span data-i18n="btnRecord">Record</span>
-          </button>
-          <button id="playRecordBtn" class="btn btn-secondary" disabled>
-            <i class="fa-solid fa-play"></i> <span data-i18n="btnPlay">Listen</span>
-          </button>
-          <a id="downloadRecordBtn" class="btn btn-download hidden" download="cloudbeats-session.mp3">
-            <i class="fa-solid fa-download"></i> <span data-i18n="btnExport">Export MP3</span>
-          </a>
-        </div>
+      <!-- Header Right: Language Toggle & Buy Me a Coffee -->
+      <div class="header-right-actions">
+        <button id="langToggleBtn" class="btn btn-secondary btn-lang" title="Switch language / Changer la langue">
+          <i class="fa-solid fa-globe"></i> <span id="currentLangText">EN</span>
+        </button>
+        <a href="https://buymeacoffee.com/emileg" target="_blank" rel="noopener noreferrer" class="btn btn-bmc-header" title="Buy Émile a Coffee / Offrir un café à Émile">
+          <i class="fa-solid fa-mug-hot"></i> <span data-i18n="btnBmcHeader">Buy Me a Coffee</span>
+        </a>
       </div>
     </header>
+
+    <!-- HEADER 2: STUDIO TOOLS & CONTROL BAR -->
+    <div class="studio-tools-bar glass-card">
+      <div class="control-group">
+        <label for="masterVolume"><i class="fa-solid fa-volume-high"></i> Master</label>
+        <input type="range" id="masterVolume" min="0" max="1" step="0.01" value="0.85">
+        <span id="volumeValue">85%</span>
+      </div>
+
+      <div class="action-buttons">
+        <select id="keyboardFocusSelect" class="btn-sm select-sm" title="Keyboard Focus Mode / Mode Focus Clavier">
+          <option value="all" data-i18n="focusAll">⚡ All Active</option>
+          <option value="piano" data-i18n="focusPiano">🎹 Piano Focus</option>
+          <option value="xylo" data-i18n="focusXylo">🔔 Xylophone Focus</option>
+        </select>
+        <button id="toggleMetroBarBtn" class="btn btn-secondary" title="Show or hide Metronome bar">
+          <i class="fa-solid fa-stopwatch text-xylo"></i> <span data-i18n="btnMetro">Metronome</span>
+        </button>
+        <button id="micToggleBtn" class="btn btn-mic">
+          <i class="fa-solid fa-microphone-slash"></i> <span data-i18n="btnMic">Mic</span>
+        </button>
+        <button id="recordBtn" class="btn btn-record">
+          <i class="fa-solid fa-circle"></i> <span data-i18n="btnRecord">Record</span>
+        </button>
+        <button id="playRecordBtn" class="btn btn-secondary" disabled>
+          <i class="fa-solid fa-play"></i> <span data-i18n="btnPlay">Listen</span>
+        </button>
+        <a id="downloadRecordBtn" class="btn btn-download hidden" download="cloudbeats-session.mp3">
+          <i class="fa-solid fa-download"></i> <span data-i18n="btnExport">Export MP3</span>
+        </a>
+      </div>
+    </div>
 
     <!-- DEDICATED METRONOME & TEMPO TOOLBAR (Hidden by default) -->
     <div class="metronome-bar glass-card hidden" id="metronomeToolbar">
