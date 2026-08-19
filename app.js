@@ -2109,8 +2109,18 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ------------------------------------------------------------------------
-  // 15. KEYBOARD SHORTCUTS
+  // 15. KEYBOARD SHORTCUTS & INSTRUMENT FOCUS ENGINE
   // ------------------------------------------------------------------------
+  let activeKeyboardFocus = 'all';
+
+  const keyboardFocusSelect = document.getElementById('keyboardFocusSelect');
+  if (keyboardFocusSelect) {
+    keyboardFocusSelect.addEventListener('change', (e) => {
+      activeKeyboardFocus = e.target.value;
+      e.target.blur();
+    });
+  }
+
   const drumKeyMap = {
     '1': 'kick',
     '2': 'snare',
@@ -2124,7 +2134,9 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   document.addEventListener('keydown', (e) => {
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+    // Only ignore keys if user is typing in a text or number input box
+    if (e.target.tagName === 'INPUT' && (e.target.type === 'text' || e.target.type === 'number')) return;
+
     ensureAudioContext();
 
     const key = e.key.toLowerCase();
