@@ -96,6 +96,11 @@
         </div>
 
         <div class="action-buttons">
+          <select id="keyboardFocusSelect" class="btn-sm select-sm" title="Keyboard Focus Mode / Mode Focus Clavier">
+            <option value="all" data-i18n="focusAll">⚡ All Active</option>
+            <option value="piano" data-i18n="focusPiano">🎹 Piano Focus</option>
+            <option value="xylo" data-i18n="focusXylo">🔔 Xylophone Focus</option>
+          </select>
           <button id="langToggleBtn" class="btn btn-secondary btn-lang" title="Switch language / Changer la langue">
             <i class="fa-solid fa-globe"></i> <span id="currentLangText">EN</span>
           </button>
@@ -554,30 +559,51 @@
         </div>
       </section>
 
-      <!-- SECTION 5: SEQUENCEUR 16-STEPS -->
+      <!-- SECTION 5: DUAL SEQUENCEUR 16-STEPS -->
       <section class="instrument-section glass-card" id="section-sequencer">
         <div class="section-header">
           <div class="title-wrap">
-            <h2><i class="fa-solid fa-table-cells text-seq"></i> <span data-i18n="titleSeq">Séquenceur 16 Étapes</span></h2>
+            <h2><i class="fa-solid fa-table-cells text-seq"></i> <span data-i18n="titleSeq">Dual 16-Step Pattern Sequencer</span></h2>
           </div>
 
           <div class="seq-controls">
             <button id="seqPlayBtn" class="btn btn-primary">
-              <i class="fa-solid fa-play"></i> <span data-i18n="seqPlay">Lancer la Boucle</span>
+              <i class="fa-solid fa-play"></i> <span data-i18n="seqPlay">Play Loop</span>
             </button>
             <button id="seqClearBtn" class="btn btn-secondary">
-              <i class="fa-solid fa-trash-can"></i> <span data-i18n="seqClear">Effacer</span>
+              <i class="fa-solid fa-trash-can"></i> <span data-i18n="seqClear">Clear</span>
             </button>
             <select id="seqPresetSelect" class="preset-select">
               <option value="">-- Presets --</option>
-              <option value="rock">Rock & Piano</option>
-              <option value="funk">Groove & Xylo</option>
-              <option value="ballad">Ballade Douce</option>
+              <option value="rock" data-i18n="presetRock">Rock & Piano</option>
+              <option value="funk" data-i18n="presetFunk">Groove & Xylo</option>
+              <option value="ballad" data-i18n="presetBallad">Soft Ballad</option>
             </select>
           </div>
         </div>
 
-        <div class="sequencer-matrix" id="sequencerMatrix"></div>
+        <div class="seq-sub-nav">
+          <button class="seq-sub-tab active" data-seq-tab="drums">
+            <i class="fa-solid fa-drum text-drums"></i> <span data-i18n="seqTabDrums">Drum Sequencer</span>
+          </button>
+          <button class="seq-sub-tab" data-seq-tab="melodic">
+            <i class="fa-solid fa-music text-piano"></i> <span data-i18n="seqTabMelodic">Melodic Sequencer</span>
+          </button>
+          <button class="seq-sub-tab" data-seq-tab="dual">
+            <i class="fa-solid fa-layer-group text-xylo"></i> <span data-i18n="seqTabDual">Dual View (Both)</span>
+          </button>
+        </div>
+
+        <div class="seq-matrices-wrapper">
+          <div class="sequencer-matrix-block" id="seqBlockDrums">
+            <h3 class="seq-block-title"><i class="fa-solid fa-drum text-drums"></i> <span data-i18n="seqBlockDrums">Acoustic Drum Kit Sequencer</span></h3>
+            <div class="sequencer-matrix" id="sequencerMatrixDrums"></div>
+          </div>
+          <div class="sequencer-matrix-block hidden-seq-block" id="seqBlockMelodic">
+            <h3 class="seq-block-title"><i class="fa-solid fa-music text-piano"></i> <span data-i18n="seqBlockMelodic">Full Scale Melodic Sequencer (C4-C6)</span></h3>
+            <div class="sequencer-matrix" id="sequencerMatrixMelodic"></div>
+          </div>
+        </div>
       </section>
 
     </main>

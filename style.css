@@ -1332,6 +1332,70 @@ body {
   overflow-x: auto;
 }
 
+/* Dual Sequencers Sub-Nav & Matrix Blocks */
+.seq-sub-nav {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
+}
+
+.seq-sub-tab {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+}
+
+.seq-sub-tab:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-bright);
+}
+
+.seq-sub-tab.active {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.seq-matrices-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.sequencer-matrix-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.seq-block-title {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--text-bright);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.hidden-seq-block {
+  display: none !important;
+}
+
 .seq-row {
   display: flex;
   align-items: center;

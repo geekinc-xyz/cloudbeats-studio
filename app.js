@@ -976,24 +976,39 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ------------------------------------------------------------------------
-  // 8. PIANO KEYBOARD UI & LOGIC
+  // 8. PIANO KEYBOARD UI & LOGIC (2-OCTAVE PHYSICAL KEYBOARD MAPPING)
   // ------------------------------------------------------------------------
   let currentOctave = 4;
   let sustainActive = true;
 
-  const octaveNotes = [
-    { note: 'C', isBlack: false, key: 'q', altKey: 'a' },
-    { note: 'C#', isBlack: true, key: 'z', altKey: 'w' },
-    { note: 'D', isBlack: false, key: 's', altKey: 's' },
-    { note: 'D#', isBlack: true, key: 'e', altKey: 'e' },
-    { note: 'E', isBlack: false, key: 'd', altKey: 'd' },
-    { note: 'F', isBlack: false, key: 'f', altKey: 'f' },
-    { note: 'F#', isBlack: true, key: 't', altKey: 't' },
-    { note: 'G', isBlack: false, key: 'g', altKey: 'g' },
-    { note: 'G#', isBlack: true, key: 'y', altKey: 'y' },
-    { note: 'A', isBlack: false, key: 'h', altKey: 'h' },
-    { note: 'A#', isBlack: true, key: 'u', altKey: 'u' },
-    { note: 'B', isBlack: false, key: 'j', altKey: 'j' }
+  const pianoLowerKeys = [
+    { note: 'C', isBlack: false, key: 'z' },
+    { note: 'C#', isBlack: true, key: 's' },
+    { note: 'D', isBlack: false, key: 'x' },
+    { note: 'D#', isBlack: true, key: 'd' },
+    { note: 'E', isBlack: false, key: 'c' },
+    { note: 'F', isBlack: false, key: 'v' },
+    { note: 'F#', isBlack: true, key: 'g' },
+    { note: 'G', isBlack: false, key: 'b' },
+    { note: 'G#', isBlack: true, key: 'h' },
+    { note: 'A', isBlack: false, key: 'n' },
+    { note: 'A#', isBlack: true, key: 'j' },
+    { note: 'B', isBlack: false, key: 'm' }
+  ];
+
+  const pianoUpperKeys = [
+    { note: 'C', isBlack: false, key: 'q' },
+    { note: 'C#', isBlack: true, key: '2' },
+    { note: 'D', isBlack: false, key: 'w' },
+    { note: 'D#', isBlack: true, key: '3' },
+    { note: 'E', isBlack: false, key: 'e' },
+    { note: 'F', isBlack: false, key: 'r' },
+    { note: 'F#', isBlack: true, key: '5' },
+    { note: 'G', isBlack: false, key: 't' },
+    { note: 'G#', isBlack: true, key: '6' },
+    { note: 'A', isBlack: false, key: 'y' },
+    { note: 'A#', isBlack: true, key: '7' },
+    { note: 'B', isBlack: false, key: 'u' }
   ];
 
   function getNoteFrequency(noteWithOctave) {
@@ -1007,13 +1022,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderPianoKeyboard() {
     const container = document.getElementById('pianoKeyboard');
+    if (!container) return;
     container.innerHTML = '';
 
-    const octavesToRender = [currentOctave, currentOctave + 1];
+    const octavesToRender = [
+      { oct: currentOctave, keys: pianoLowerKeys },
+      { oct: currentOctave + 1, keys: pianoUpperKeys }
+    ];
     let whiteKeyIndex = 0;
 
-    octavesToRender.forEach((oct) => {
-      octaveNotes.forEach((n) => {
+    octavesToRender.forEach(({ oct, keys }) => {
+      keys.forEach((n) => {
         const fullNote = `${n.note}${oct}`;
         const keyEl = document.createElement('div');
 
@@ -1105,21 +1124,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // 10. XYLOPHONE UI & MULTI-NOTATION ENGINE (SOLFÈGE, LETTERS, OCTAVES, NUMBERS)
   // ------------------------------------------------------------------------
   const xyloBarsConfig = [
-    { note: 'C4', solfège: 'Do 4', letters: 'C', octaves: 'C4', numbers: '1', key: 'u', height: 180 },
-    { note: 'D4', solfège: 'Ré 4', letters: 'D', octaves: 'D4', numbers: '2', key: 'i', height: 172 },
-    { note: 'E4', solfège: 'Mi 4', letters: 'E', octaves: 'E4', numbers: '3', key: 'o', height: 164 },
-    { note: 'F4', solfège: 'Fa 4', letters: 'F', octaves: 'F4', numbers: '4', key: 'p', height: 156 },
-    { note: 'G4', solfège: 'Sol 4', letters: 'G', octaves: 'G4', numbers: '5', key: 'j', height: 148 },
-    { note: 'A4', solfège: 'La 4', letters: 'A', octaves: 'A4', numbers: '6', key: 'k', height: 140 },
-    { note: 'B4', solfège: 'Si 4', letters: 'B', octaves: 'B4', numbers: '7', key: 'l', height: 132 },
-    { note: 'C5', solfège: 'Do 5', letters: 'C', octaves: 'C5', numbers: '8', key: 'm', height: 124 },
-    { note: 'D5', solfège: 'Ré 5', letters: 'D', octaves: 'D5', numbers: '9', key: 'v', height: 116 },
-    { note: 'E5', solfège: 'Mi 5', letters: 'E', octaves: 'E5', numbers: '10', key: 'b', height: 108 },
-    { note: 'F5', solfège: 'Fa 5', letters: 'F', octaves: 'F5', numbers: '11', key: 'n', height: 100 },
-    { note: 'G5', solfège: 'Sol 5', letters: 'G', octaves: 'G5', numbers: '12', key: ',', height: 92 },
-    { note: 'A5', solfège: 'La 5', letters: 'A', octaves: 'A5', numbers: '13', key: ';', height: 84 },
-    { note: 'B5', solfège: 'Si 5', letters: 'B', octaves: 'B5', numbers: '14', key: ':', height: 76 },
-    { note: 'C6', solfège: 'Do 6', letters: 'C', octaves: 'C6', numbers: '15', key: '!', height: 68 }
+    { note: 'C4', solfège: 'Do 4', letters: 'C', octaves: 'C4', numbers: '1', key: 'z', height: 180 },
+    { note: 'D4', solfège: 'Ré 4', letters: 'D', octaves: 'D4', numbers: '2', key: 'x', height: 172 },
+    { note: 'E4', solfège: 'Mi 4', letters: 'E', octaves: 'E4', numbers: '3', key: 'c', height: 164 },
+    { note: 'F4', solfège: 'Fa 4', letters: 'F', octaves: 'F4', numbers: '4', key: 'v', height: 156 },
+    { note: 'G4', solfège: 'Sol 4', letters: 'G', octaves: 'G4', numbers: '5', key: 'b', height: 148 },
+    { note: 'A4', solfège: 'La 4', letters: 'A', octaves: 'A4', numbers: '6', key: 'n', height: 140 },
+    { note: 'B4', solfège: 'Si 4', letters: 'B', octaves: 'B4', numbers: '7', key: 'm', height: 132 },
+    { note: 'C5', solfège: 'Do 5', letters: 'C', octaves: 'C5', numbers: '8', key: 'q', height: 124 },
+    { note: 'D5', solfège: 'Ré 5', letters: 'D', octaves: 'D5', numbers: '9', key: 'w', height: 116 },
+    { note: 'E5', solfège: 'Mi 5', letters: 'E', octaves: 'E5', numbers: '10', key: 'e', height: 108 },
+    { note: 'F5', solfège: 'Fa 5', letters: 'F', octaves: 'F5', numbers: '11', key: 'r', height: 100 },
+    { note: 'G5', solfège: 'Sol 5', letters: 'G', octaves: 'G5', numbers: '12', key: 't', height: 92 },
+    { note: 'A5', solfège: 'La 5', letters: 'A', octaves: 'A5', numbers: '13', key: 'y', height: 84 },
+    { note: 'B5', solfège: 'Si 5', letters: 'B', octaves: 'B5', numbers: '14', key: 'u', height: 76 },
+    { note: 'C6', solfège: 'Do 6', letters: 'C', octaves: 'C6', numbers: '15', key: 'i', height: 68 }
   ];
 
   function renderXylophone() {
@@ -1375,6 +1394,9 @@ document.addEventListener('DOMContentLoaded', () => {
       btnRecord: 'Record',
       btnPlay: 'Listen',
       btnExport: 'Export MP3',
+      focusAll: '⚡ All Active',
+      focusPiano: '🎹 Piano Focus',
+      focusXylo: '🔔 Xylophone Focus',
       metroTitle: 'METRONOME & TEMPO',
       lblTempo: 'Tempo',
       lblTimeSig: 'Time Sig',
@@ -1398,7 +1420,7 @@ document.addEventListener('DOMContentLoaded', () => {
       optPurple: 'Purple Glow',
       btnSustain: 'Sustain',
       lblOctave: 'Octave:',
-      titleDrums: 'Acoustic Drums',
+      titleDrums: 'Virtual Acoustic Drums',
       drumCrash: 'Crash Cymbal',
       drumHihat: 'Hi-Hat',
       drumHihatClosed: 'Closed Hi-Hat',
@@ -1410,7 +1432,7 @@ document.addEventListener('DOMContentLoaded', () => {
       drumSnare: 'Snare Drum',
       drumKick: 'Bass Drum',
       drumTomLow: 'Low Tom',
-      titleXylo: 'Xylophone',
+      titleXylo: 'Real Recorded Xylophone',
       lblFinish: 'Finish:',
       optFire: 'Fire Orange',
       optRainbow: 'Rainbow',
@@ -1423,11 +1445,16 @@ document.addEventListener('DOMContentLoaded', () => {
       chXylo: 'XYLOPHONE',
       chMic: 'MIC',
       chMaster: 'MASTER',
-      titleSeq: '16-Step Pattern Sequencer',
+      titleSeq: 'Dual 16-Step Pattern Sequencer',
       seqPlay: 'Play Loop',
       seqPause: 'Pause',
       seqStop: 'Stop Loop',
       seqClear: 'Clear',
+      seqTabDrums: 'Drum Sequencer',
+      seqTabMelodic: 'Melodic Sequencer',
+      seqTabDual: 'Dual View (Both)',
+      seqBlockDrums: 'Acoustic Drum Kit Sequencer',
+      seqBlockMelodic: 'Full Scale Melodic Sequencer (C4-C6)',
       presetRock: 'Rock & Piano',
       presetFunk: 'Groove & Xylo',
       presetBallad: 'Soft Ballad',
@@ -1460,6 +1487,9 @@ document.addEventListener('DOMContentLoaded', () => {
       btnRecord: 'Enregistrer',
       btnPlay: 'Écouter',
       btnExport: 'Export MP3',
+      focusAll: '⚡ Tous Actifs',
+      focusPiano: '🎹 Focus Piano',
+      focusXylo: '🔔 Focus Xylophone',
       metroTitle: 'MÉTRONOME & TEMPO',
       lblTempo: 'Tempo',
       lblTimeSig: 'Mesure',
@@ -1508,7 +1538,7 @@ document.addEventListener('DOMContentLoaded', () => {
       chXylo: 'XYLOPHONE',
       chMic: 'MICRO',
       chMaster: 'MASTER',
-      titleSeq: 'Séquenceur 16 Étapes',
+      titleSeq: 'Séquenceur 16 Étapes Double',
       seqPlay: 'Lancer la Boucle',
       seqPause: 'Pause',
       seqStop: 'Arrêter la Boucle',
@@ -1516,6 +1546,11 @@ document.addEventListener('DOMContentLoaded', () => {
       presetRock: 'Rock & Piano',
       presetFunk: 'Groove & Xylo',
       presetBallad: 'Ballade Douce',
+      seqTabDrums: 'Séquenceur Batterie',
+      seqTabMelodic: 'Séquenceur Mélodique',
+      seqTabDual: 'Vue Double (Les 2)',
+      seqBlockDrums: 'Séquenceur Batterie Acoustique',
+      seqBlockMelodic: 'Séquenceur Mélodique Gamme Complète (Do4-Do6)',
       tagline: 'Studio de création musicale virtuel interactif Web Audio API.',
       copyright: '© 2026 <strong>CloudBeats Studio</strong>. Tous droits réservés.<br>Créé par <strong>Émile Gagnon</strong> de <strong>GEEK FACTORY</strong>.',
       lblContact: 'Contact :',
@@ -1683,33 +1718,55 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ------------------------------------------------------------------------
-  // 12. SEQUENCEUR 16-STEPS (LOOPER)
+  // 12. DUAL SEQUENCEURS 16-STEPS (FULL DRUMS + FULL SCALE MELODIC)
   // ------------------------------------------------------------------------
-  const seqTracks = [
+  const seqDrumTracks = [
     { id: 'kick', key: 'trKick', defaultEn: 'Bass Drum', defaultFr: 'Grosse Caisse', type: 'drum', sound: 'kick', icon: 'fa-drum' },
     { id: 'snare', key: 'trSnare', defaultEn: 'Snare Drum', defaultFr: 'Caisse Claire', type: 'drum', sound: 'snare', icon: 'fa-box' },
-    { id: 'hihat', key: 'trHihat', defaultEn: 'Hi-Hat', defaultFr: 'Charley', type: 'drum', sound: 'hihat', icon: 'fa-circle-dot' },
-    { id: 'piano_c', key: 'trPianoC', defaultEn: 'Piano C4', defaultFr: 'Piano Do4', type: 'piano', sound: 'C4', icon: 'fa-keyboard' },
-    { id: 'piano_e', key: 'trPianoE', defaultEn: 'Piano E4', defaultFr: 'Piano Mi4', type: 'piano', sound: 'E4', icon: 'fa-keyboard' },
-    { id: 'xylo_g', key: 'trXyloG', defaultEn: 'Xylo G4', defaultFr: 'Xylo Sol4', type: 'xylo', sound: 'G4', icon: 'fa-bars-staggered' },
-    { id: 'xylo_c', key: 'trXyloC', defaultEn: 'Xylo C5', defaultFr: 'Xylo Do5', type: 'xylo', sound: 'C5', icon: 'fa-bars-staggered' }
+    { id: 'hihat', key: 'drumHihatClosed', defaultEn: 'Closed Hi-Hat', defaultFr: 'Charley Fermé', type: 'drum', sound: 'hihat', icon: 'fa-circle-dot' },
+    { id: 'openhat', key: 'drumHihatOpen', defaultEn: 'Open Hi-Hat', defaultFr: 'Charley Ouvert', type: 'drum', sound: 'openhat', icon: 'fa-compact-disc' },
+    { id: 'tom1', key: 'drumTomHigh', defaultEn: 'High Tom', defaultFr: 'Tom Haut', type: 'drum', sound: 'tom1', icon: 'fa-layer-group' },
+    { id: 'tom2', key: 'drumTomMid', defaultEn: 'Mid Tom', defaultFr: 'Tom Moyen', type: 'drum', sound: 'tom2', icon: 'fa-cubes' },
+    { id: 'tomlow', key: 'drumTomLow', defaultEn: 'Low Tom', defaultFr: 'Tom Bas', type: 'drum', sound: 'clap', icon: 'fa-drum' },
+    { id: 'crash', key: 'drumCrash', defaultEn: 'Crash Cymbal', defaultFr: 'Cymbale Crash', type: 'drum', sound: 'crash', icon: 'fa-star' },
+    { id: 'ride', key: 'drumRide', defaultEn: 'Ride Cymbal', defaultFr: 'Cymbale Ride', type: 'drum', sound: 'ride', icon: 'fa-record-vinyl' },
+    { id: 'clap', key: 'trClap', defaultEn: 'Clap', defaultFr: 'Clap', type: 'drum', sound: 'clap', icon: 'fa-hands-clapping' }
   ];
 
-  let seqState = seqTracks.map(() => Array(16).fill(false));
+  const seqMelodicTracks = [
+    { id: 'mel_c4', note: 'C4', label: 'Do 4 (C4)', type: 'piano', sound: 'C4', icon: 'fa-keyboard' },
+    { id: 'mel_d4', note: 'D4', label: 'Ré 4 (D4)', type: 'piano', sound: 'D4', icon: 'fa-keyboard' },
+    { id: 'mel_e4', note: 'E4', label: 'Mi 4 (E4)', type: 'piano', sound: 'E4', icon: 'fa-keyboard' },
+    { id: 'mel_f4', note: 'F4', label: 'Fa 4 (F4)', type: 'piano', sound: 'F4', icon: 'fa-keyboard' },
+    { id: 'mel_g4', note: 'G4', label: 'Sol 4 (G4)', type: 'piano', sound: 'G4', icon: 'fa-keyboard' },
+    { id: 'mel_a4', note: 'A4', label: 'La 4 (A4)', type: 'piano', sound: 'A4', icon: 'fa-keyboard' },
+    { id: 'mel_b4', note: 'B4', label: 'Si 4 (B4)', type: 'piano', sound: 'B4', icon: 'fa-keyboard' },
+    { id: 'mel_c5', note: 'C5', label: 'Do 5 (C5)', type: 'xylo', sound: 'C5', icon: 'fa-bars-staggered' },
+    { id: 'mel_d5', note: 'D5', label: 'Ré 5 (D5)', type: 'xylo', sound: 'D5', icon: 'fa-bars-staggered' },
+    { id: 'mel_e5', note: 'E5', label: 'Mi 5 (E5)', type: 'xylo', sound: 'E5', icon: 'fa-bars-staggered' },
+    { id: 'mel_f5', note: 'F5', label: 'Fa 5 (F5)', type: 'xylo', sound: 'F5', icon: 'fa-bars-staggered' },
+    { id: 'mel_g5', note: 'G5', label: 'Sol 5 (G5)', type: 'xylo', sound: 'G5', icon: 'fa-bars-staggered' },
+    { id: 'mel_a5', note: 'A5', label: 'La 5 (A5)', type: 'xylo', sound: 'A5', icon: 'fa-bars-staggered' },
+    { id: 'mel_b5', note: 'B5', label: 'Si 5 (B5)', type: 'xylo', sound: 'B5', icon: 'fa-bars-staggered' },
+    { id: 'mel_c6', note: 'C6', label: 'Do 6 (C6)', type: 'xylo', sound: 'C6', icon: 'fa-bars-staggered' }
+  ];
+
+  let seqDrumState = seqDrumTracks.map(() => Array(16).fill(false));
+  let seqMelodicState = seqMelodicTracks.map(() => Array(16).fill(false));
   let isSeqPlaying = false;
   let currentStep = 0;
   let seqTimer = null;
 
-  function renderSequencerMatrix() {
-    const container = document.getElementById('sequencerMatrix');
+  function renderSingleMatrix(tracks, state, containerId, stateKey) {
+    const container = document.getElementById(containerId);
     if (!container) return;
     container.innerHTML = '';
 
-    seqTracks.forEach((track, trackIdx) => {
+    tracks.forEach((track, trackIdx) => {
       const row = document.createElement('div');
       row.className = 'seq-row';
 
-      const trackName = (translations[currentLang] && translations[currentLang][track.key]) || (currentLang === 'fr' ? track.defaultFr : track.defaultEn);
+      const trackName = track.label || (translations[currentLang] && translations[currentLang][track.key]) || (currentLang === 'fr' ? track.defaultFr : track.defaultEn);
 
       const info = document.createElement('div');
       info.className = 'seq-track-info';
@@ -1721,13 +1778,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       for (let stepIdx = 0; stepIdx < 16; stepIdx++) {
         const cell = document.createElement('div');
-        cell.className = `step-cell ${seqState[trackIdx][stepIdx] ? 'active' : ''}`;
+        cell.className = `step-cell ${state[trackIdx][stepIdx] ? 'active' : ''}`;
         cell.dataset.track = trackIdx;
         cell.dataset.step = stepIdx;
+        cell.dataset.stateKey = stateKey;
 
         cell.addEventListener('click', () => {
-          seqState[trackIdx][stepIdx] = !seqState[trackIdx][stepIdx];
-          cell.classList.toggle('active', seqState[trackIdx][stepIdx]);
+          state[trackIdx][stepIdx] = !state[trackIdx][stepIdx];
+          cell.classList.toggle('active', state[trackIdx][stepIdx]);
         });
 
         stepsContainer.appendChild(cell);
@@ -1738,13 +1796,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function renderSequencerMatrix() {
+    renderSingleMatrix(seqDrumTracks, seqDrumState, 'sequencerMatrixDrums', 'drums');
+    renderSingleMatrix(seqMelodicTracks, seqMelodicState, 'sequencerMatrixMelodic', 'melodic');
+  }
+
   function startSequencer() {
     if (isSeqPlaying) return;
     ensureAudioContext();
     isSeqPlaying = true;
     currentStep = 0;
-    document.getElementById('seqPlayBtn').innerHTML = `<i class="fa-solid fa-pause"></i> Pause`;
-    document.getElementById('seqPlayBtn').classList.replace('btn-primary', 'btn-secondary');
+    const playBtn = document.getElementById('seqPlayBtn');
+    if (playBtn) {
+      playBtn.innerHTML = `<i class="fa-solid fa-pause"></i> ${translations[currentLang]?.seqPause || 'Pause'}`;
+      playBtn.classList.replace('btn-primary', 'btn-secondary');
+    }
 
     runSeqStep();
   }
@@ -1752,8 +1818,11 @@ document.addEventListener('DOMContentLoaded', () => {
   function stopSequencer() {
     isSeqPlaying = false;
     clearTimeout(seqTimer);
-    document.getElementById('seqPlayBtn').innerHTML = `<i class="fa-solid fa-play"></i> Lancer la Boucle`;
-    document.getElementById('seqPlayBtn').classList.replace('btn-secondary', 'btn-primary');
+    const playBtn = document.getElementById('seqPlayBtn');
+    if (playBtn) {
+      playBtn.innerHTML = `<i class="fa-solid fa-play"></i> <span data-i18n="seqPlay">${translations[currentLang]?.seqPlay || 'Play Loop'}</span>`;
+      playBtn.classList.replace('btn-secondary', 'btn-primary');
+    }
     document.querySelectorAll('.step-cell').forEach(c => c.classList.remove('playing-step'));
   }
 
@@ -1766,11 +1835,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.step-cell').forEach(c => c.classList.remove('playing-step'));
     document.querySelectorAll(`.step-cell[data-step="${currentStep}"]`).forEach(c => c.classList.add('playing-step'));
 
-    seqTracks.forEach((track, trackIdx) => {
-      if (seqState[trackIdx][currentStep]) {
-        if (track.type === 'drum') {
-          triggerDrumElement(track.sound);
-        } else if (track.type === 'piano') {
+    // 1. Trigger Drum Sequencer Notes
+    seqDrumTracks.forEach((track, trackIdx) => {
+      if (seqDrumState[trackIdx][currentStep]) {
+        triggerDrumElement(track.sound);
+      }
+    });
+
+    // 2. Trigger Melodic Sequencer Notes
+    seqMelodicTracks.forEach((track, trackIdx) => {
+      if (seqMelodicState[trackIdx][currentStep]) {
+        if (track.type === 'piano') {
           triggerPianoKey(track.sound);
         } else if (track.type === 'xylo') {
           triggerXyloBar(track.sound);
@@ -1782,36 +1857,82 @@ document.addEventListener('DOMContentLoaded', () => {
     seqTimer = setTimeout(runSeqStep, stepTimeMs);
   }
 
-  document.getElementById('seqPlayBtn').addEventListener('click', () => {
+  document.getElementById('seqPlayBtn')?.addEventListener('click', () => {
     if (isSeqPlaying) stopSequencer();
     else startSequencer();
   });
 
-  document.getElementById('seqClearBtn').addEventListener('click', () => {
-    seqState = seqTracks.map(() => Array(16).fill(false));
+  document.getElementById('seqClearBtn')?.addEventListener('click', () => {
+    seqDrumState = seqDrumTracks.map(() => Array(16).fill(false));
+    seqMelodicState = seqMelodicTracks.map(() => Array(16).fill(false));
     renderSequencerMatrix();
   });
 
-  document.getElementById('seqPresetSelect').addEventListener('change', (e) => {
+  // Dual Sequencer Sub-Tabs Listener
+  const seqSubTabs = document.querySelectorAll('.seq-sub-tab');
+  const seqBlockDrums = document.getElementById('seqBlockDrums');
+  const seqBlockMelodic = document.getElementById('seqBlockMelodic');
+
+  seqSubTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const mode = tab.dataset.seqTab;
+      seqSubTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      if (mode === 'drums') {
+        seqBlockDrums?.classList.remove('hidden-seq-block');
+        seqBlockMelodic?.classList.add('hidden-seq-block');
+      } else if (mode === 'melodic') {
+        seqBlockDrums?.classList.add('hidden-seq-block');
+        seqBlockMelodic?.classList.remove('hidden-seq-block');
+      } else if (mode === 'dual') {
+        seqBlockDrums?.classList.remove('hidden-seq-block');
+        seqBlockMelodic?.classList.remove('hidden-seq-block');
+      }
+    });
+  });
+
+  document.getElementById('seqPresetSelect')?.addEventListener('change', (e) => {
     const val = e.target.value;
-    seqState = seqTracks.map(() => Array(16).fill(false));
+    seqDrumState = seqDrumTracks.map(() => Array(16).fill(false));
+    seqMelodicState = seqMelodicTracks.map(() => Array(16).fill(false));
 
     if (val === 'rock') {
-      seqState[0][0] = seqState[0][8] = seqState[0][10] = true;
-      seqState[1][4] = seqState[1][12] = true;
-      for (let i = 0; i < 16; i += 2) seqState[2][i] = true;
-      seqState[3][0] = seqState[4][0] = seqState[3][8] = seqState[4][8] = true;
+      // Rock Drums
+      seqDrumState[0][0] = seqDrumState[0][8] = seqDrumState[0][10] = true; // Kick
+      seqDrumState[1][4] = seqDrumState[1][12] = true; // Snare
+      seqDrumState[2][0] = seqDrumState[2][2] = seqDrumState[2][4] = seqDrumState[2][6] = seqDrumState[2][8] = seqDrumState[2][10] = seqDrumState[2][12] = seqDrumState[2][14] = true; // Hihat
+      seqDrumState[7][0] = true; // Crash
+      // Rock Piano / Melodic
+      seqMelodicState[0][0] = seqMelodicState[2][0] = seqMelodicState[4][0] = true; // C4 E4 G4
+      seqMelodicState[0][4] = seqMelodicState[2][4] = seqMelodicState[4][4] = true;
+      seqMelodicState[5][8] = seqMelodicState[0][8] = seqMelodicState[2][8] = true; // A4 C4 E4
+      seqMelodicState[3][12] = seqMelodicState[5][12] = seqMelodicState[0][12] = true; // F4 A4 C4
     } else if (val === 'funk') {
-      seqState[0][0] = seqState[0][6] = seqState[0][10] = true;
-      seqState[1][4] = seqState[1][12] = seqState[1][14] = true;
-      seqState[5][2] = seqState[6][4] = seqState[5][6] = seqState[6][12] = true;
+      // Funk Drums
+      seqDrumState[0][0] = seqDrumState[0][6] = seqDrumState[0][10] = true;
+      seqDrumState[1][4] = seqDrumState[1][12] = seqDrumState[1][14] = true;
+      seqDrumState[3][2] = seqDrumState[3][10] = true; // Openhat
+      seqDrumState[9][4] = seqDrumState[9][12] = true; // Clap
+      // Xylo Funk Arpeggio
+      seqMelodicState[7][0] = seqMelodicState[9][2] = seqMelodicState[11][4] = seqMelodicState[14][6] = true; // C5 E5 G5 C6
+      seqMelodicState[11][8] = seqMelodicState[9][10] = seqMelodicState[7][12] = seqMelodicState[4][14] = true;
     } else if (val === 'ballad') {
-      seqState[3][0] = seqState[4][4] = seqState[3][8] = seqState[4][12] = true;
-      seqState[5][2] = seqState[6][6] = seqState[5][10] = seqState[6][14] = true;
+      // Soft Ballad
+      seqDrumState[0][0] = seqDrumState[0][8] = true;
+      seqDrumState[1][4] = seqDrumState[1][12] = true;
+      seqDrumState[2][0] = seqDrumState[2][4] = seqDrumState[2][8] = seqDrumState[2][12] = true;
+      // Soft Melodic Harmony
+      seqMelodicState[0][0] = seqMelodicState[2][2] = seqMelodicState[4][4] = seqMelodicState[7][6] = true;
+      seqMelodicState[9][8] = seqMelodicState[11][10] = seqMelodicState[14][12] = true;
     }
 
     renderSequencerMatrix();
   });
+
+  // ------------------------------------------------------------------------
+  // 13. SAMPLE MANAGER SECTION
+  // ------------------------------------------------------------------------
 
   // ------------------------------------------------------------------------
   // 14. SESSION RECORDER (Instruments + Microphone)
@@ -1864,18 +1985,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         micEnabled = true;
-        micToggleBtn.classList.add('mic-active');
-        micToggleBtn.innerHTML = `<i class="fa-solid fa-microphone"></i> Micro ON`;
+        micToggleBtn.classList.add('active');
+        micToggleBtn.innerHTML = `<i class="fa-solid fa-microphone text-piano"></i> <span data-i18n="btnMic">Micro (On)</span>`;
       } catch (err) {
-        alert('Impossible d\'accéder au microphone : ' + err.message);
+        console.error('Microphone access error:', err);
+        alert('Impossible d\'accéder au microphone. Vérifiez les permissions de votre navigateur.');
       }
     } else {
-      // Disable mic
-      if (micSourceNode) { micSourceNode.disconnect(); micSourceNode = null; }
-      if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
+      if (micStream) {
+        micStream.getTracks().forEach(track => track.stop());
+      }
       micEnabled = false;
-      micToggleBtn.classList.remove('mic-active');
-      micToggleBtn.innerHTML = `<i class="fa-solid fa-microphone-slash"></i> Micro`;
+      micToggleBtn.classList.remove('active');
+      micToggleBtn.innerHTML = `<i class="fa-solid fa-microphone-slash"></i> <span data-i18n="btnMic">Micro</span>`;
     }
   });
 
@@ -2005,21 +2127,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const key = e.key.toLowerCase();
 
-    const pianoMatch = octaveNotes.find(n => n.key === key || n.altKey === key);
-    if (pianoMatch) {
-      triggerPianoKey(`${pianoMatch.note}${currentOctave}`);
-      return;
-    }
-
+    // 1. Drums Shortcuts (Always active on 1-9)
     if (drumKeyMap[key]) {
       triggerDrumElement(drumKeyMap[key]);
       return;
     }
 
-    const xyloMatch = xyloBarsConfig.find(x => x.key === key);
-    if (xyloMatch) {
-      triggerXyloBar(xyloMatch.note);
-      return;
+    // 2. Piano Focus or All Active Mode
+    if (activeKeyboardFocus === 'piano' || activeKeyboardFocus === 'all') {
+      const lowerMatch = pianoLowerKeys.find(n => n.key === key);
+      if (lowerMatch) {
+        triggerPianoKey(`${lowerMatch.note}${currentOctave}`);
+        return;
+      }
+      const upperMatch = pianoUpperKeys.find(n => n.key === key);
+      if (upperMatch) {
+        triggerPianoKey(`${upperMatch.note}${currentOctave + 1}`);
+        return;
+      }
+    }
+
+    // 3. Xylophone Focus Mode or All Active Mode
+    if (activeKeyboardFocus === 'xylo' || activeKeyboardFocus === 'all') {
+      const xyloMatch = xyloBarsConfig.find(x => x.key === key);
+      if (xyloMatch) {
+        triggerXyloBar(xyloMatch.note);
+        return;
+      }
     }
   });
 
