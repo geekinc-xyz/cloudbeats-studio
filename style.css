@@ -221,12 +221,29 @@ body {
 }
 
 .studio-tools-bar {
-  padding: 12px 24px;
+  padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
+  gap: 16px;
+  flex-wrap: nowrap;
+}
+
+.studio-tools-bar .action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+
+.master-group-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  margin-left: auto;
 }
 
 .master-controls {
